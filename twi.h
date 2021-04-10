@@ -22,7 +22,7 @@ void parar_twi() {
 }
 
 void escrita_twi(uint8_t dado) {
-	TWDR = v_i2cData_u8 ;
+	TWDR = dado;
 	TWCR = ((1<< TWINT) | (1<<TWEN));
 	while (!(TWCR & (1 <<TWINT)));
 }
