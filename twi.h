@@ -27,7 +27,7 @@ void escrita_twi(uint8_t dado) {
 	while (!(TWCR & (1 <<TWINT)));
 }
 uint8_t leitura_twi(uint8_t ack_dado) {
-	TWCR = ((1<< TWINT) | (1<<TWEN) | (v_ackOption_u8<<TWEA));
+	TWCR = ((1<< TWINT) | (1<<TWEN) | (ack_dado<<TWEA));
 	while ( !(TWCR & (1 <<TWINT)));
 	return TWDR;
 }
