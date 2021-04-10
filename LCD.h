@@ -29,7 +29,7 @@ void clk(int num){
 }	
 
 void setLCD(){
-	// Fun��o para fazer a configura??o inicial do LCD.
+	// Função para fazer a configuração inicial do LCD.
 	DDRB = 0xFF;
 	PORTB = 0x00;
 	dly();
