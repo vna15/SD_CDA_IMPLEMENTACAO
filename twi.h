@@ -1,37 +1,65 @@
+#define F_CPU 16000000
+#include <xc.h>
+#include <util/delay.h>
 #include <avr\io.h>
 
-void config_twi();
-void iniciar_twi(int endereco);
-void parar_twi(void);
-void escrita_twi(uint8_t data);
-uint8_t leitura_twi(uint8_t ack_dado);
-
-void config_twi () {
+void ConfigTWI(){
+	//Configuração do módulo TWI
 	DDRC = (1 << 4) | (1 << 5);
-	TWSR=0x01;
-	TWBR=18;
-	TWCR=0x04;
+	TWSR |= 0b00000001; //Prescaler = 4
+	//Fator de divisão para geração de 100khz
+	TWBR= 18;
+	TWCR= 0b00000100; //Habilita o módulo TWI (TWEN = 1)
+	//------------------------------------------------------
 }
-void iniciar_twi(int endereco) {
-	
+
+void Start(){
+	//Envia a condição de START
 	TWCR = ((1<<TWINT) | (1<<TWSTA) | (1<<TWEN));
 	while (!(TWCR & (1<<TWINT)));
-	TWDR = endereco;
-}
-void parar_twi() {
-	TWCR = ((1<< TWINT) | (1<<TWEN) | (1<<TWSTO));
-	delay(100) ;
 }
 
-void escrita_twi(uint8_t dado) {
-	TWDR = dado;
+void AddrEscravo(int Addr){
+	//Envia o endereço e o bit de R/W
+	TWDR = Addr ; //0b0100 000 0
 	TWCR = ((1<< TWINT) | (1<<TWEN));
 	while (!(TWCR & (1 <<TWINT)));
 }
-uint8_t leitura_twi(uint8_t ack_dado) {
+
+void EnableLCD(){
+	_delay_ms(10);
+	//Envia o dado
+	TWDR |= (1<<TWD3) ; //enable HIGH
+	TWCR = ((1<< TWINT) | (1<<TWEN));
+	while (!(TWCR & (1 <<TWINT)));
+	_delay_ms(10);
+	//Envia o dado
+	TWDR &= ~(1<<TWD3) ; //enable low
+	TWCR = ((1<< TWINT) | (1<<TWEN));
+	while (!(TWCR & (1 <<TWINT)));
+	_delay_ms(10);
+}
+
+void carregaMSG(){
+	_delay_ms(10);
+	//Envia o dado
+	TWDR |= (1<<TWD1) ; //RS HIGH
+	TWCR = ((1<< TWINT) | (1<<TWEN));
+	while (!(TWCR & (1 <<TWINT)));
+	_delay_ms(10);
+
+	EnableLCD();
+}
+
+void Stop(){
+	//Envia uma condição de STOP
+	TWCR = ((1<< TWINT) | (1<<TWEN) | (1<<TWSTO));
+	//--------------------------------------------------------
+	_delay_ms(100);
+}
+
+uint8_t read_twi(uint8_t ack_dado) {
 	TWCR = ((1<< TWINT) | (1<<TWEN) | (ack_dado<<TWEA));
 	while ( !(TWCR & (1 <<TWINT)));
 	return TWDR;
 }
-
-
