@@ -13,9 +13,10 @@ void config_twi () {
 	TWCR=0x04;
 }
 void iniciar_twi(int endereco) {
+	
 	TWCR = ((1<<TWINT) | (1<<TWSTA) | (1<<TWEN));
-	while (!(TWCR & (1<<TWINT)))
-	TWDR = endereco
+	while (!(TWCR & (1<<TWINT)));
+	TWDR = endereco;
 }
 void parar_twi() {
 	TWCR = ((1<< TWINT) | (1<<TWEN) | (1<<TWSTO));
