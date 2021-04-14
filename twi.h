@@ -31,8 +31,6 @@ void carregaMSG(){
 	TWCR = ((1<< TWINT) | (1<<TWEN));
 	while (!(TWCR & (1 <<TWINT)));
 	delay(10);
-
-	EnableLCD();
 }
 
 void Stop(){
