@@ -24,12 +24,12 @@ void AddrEscravo(int Addr){
 	while (!(TWCR & (1 <<TWINT)));
 }
 
-void carregaMSG(){
+void carregaMSG(uint8_t dado){
 	delay(10);
 	//Envia o dado
-	TWDR |= (1<<TWD1) ; //RS HIGH
-	TWCR = ((1<< TWINT) | (1<<TWEN));
-	while (!(TWCR & (1 <<TWINT)));
+    	TWDR = dado;
+   	TWCR = ((1<< TWINT) | (1<<TWEN));
+   	while (!(TWCR & (1 <<TWINT)));
 	delay(10);
 }
 
