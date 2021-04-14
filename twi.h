@@ -1,6 +1,4 @@
 #define F_CPU 16000000
-#include <xc.h>
-#include <util/delay.h>
 #include <avr\io.h>
 
 void ConfigTWI(){
@@ -26,27 +24,13 @@ void AddrEscravo(int Addr){
 	while (!(TWCR & (1 <<TWINT)));
 }
 
-void EnableLCD(){
-	_delay_ms(10);
-	//Envia o dado
-	TWDR |= (1<<TWD3) ; //enable HIGH
-	TWCR = ((1<< TWINT) | (1<<TWEN));
-	while (!(TWCR & (1 <<TWINT)));
-	_delay_ms(10);
-	//Envia o dado
-	TWDR &= ~(1<<TWD3) ; //enable low
-	TWCR = ((1<< TWINT) | (1<<TWEN));
-	while (!(TWCR & (1 <<TWINT)));
-	_delay_ms(10);
-}
-
 void carregaMSG(){
-	_delay_ms(10);
+	//delay(10);
 	//Envia o dado
 	TWDR |= (1<<TWD1) ; //RS HIGH
 	TWCR = ((1<< TWINT) | (1<<TWEN));
 	while (!(TWCR & (1 <<TWINT)));
-	_delay_ms(10);
+	//delay(10);
 
 	EnableLCD();
 }
@@ -55,7 +39,7 @@ void Stop(){
 	//Envia uma condição de STOP
 	TWCR = ((1<< TWINT) | (1<<TWEN) | (1<<TWSTO));
 	//--------------------------------------------------------
-	_delay_ms(100);
+	//delay(100);
 }
 
 uint8_t read_twi(uint8_t ack_dado) {
