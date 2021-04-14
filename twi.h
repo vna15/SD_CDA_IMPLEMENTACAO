@@ -25,12 +25,12 @@ void AddrEscravo(int Addr){
 }
 
 void carregaMSG(){
-	//delay(10);
+	delay(10);
 	//Envia o dado
 	TWDR |= (1<<TWD1) ; //RS HIGH
 	TWCR = ((1<< TWINT) | (1<<TWEN));
 	while (!(TWCR & (1 <<TWINT)));
-	//delay(10);
+	delay(10);
 
 	EnableLCD();
 }
@@ -39,7 +39,7 @@ void Stop(){
 	//Envia uma condição de STOP
 	TWCR = ((1<< TWINT) | (1<<TWEN) | (1<<TWSTO));
 	//--------------------------------------------------------
-	//delay(100);
+	delay(100);
 }
 
 uint8_t read_twi(uint8_t ack_dado) {
