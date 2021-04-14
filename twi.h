@@ -1,7 +1,7 @@
 #include <avr\io.h>
 
 void config_twi();
-void iniciar_twi();
+void iniciar_twi(int endereco);
 void parar_twi(void);
 void escrita_twi(uint8_t data);
 uint8_t leitura_twi(uint8_t ack_dado);
@@ -12,9 +12,10 @@ void config_twi () {
 	TWBR=18;
 	TWCR=0x04;
 }
-void iniciar_twi() {
+void iniciar_twi(int endereco) {
 	TWCR = ((1<<TWINT) | (1<<TWSTA) | (1<<TWEN));
 	while (!(TWCR & (1<<TWINT)))
+	TWDR = endereco
 }
 void parar_twi() {
 	TWCR = ((1<< TWINT) | (1<<TWEN) | (1<<TWSTO));
