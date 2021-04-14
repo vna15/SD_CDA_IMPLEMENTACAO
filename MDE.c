@@ -43,13 +43,13 @@ switch (estado){
   case(desativado):
     switch(teclado){
       case(b_A):
-        case_A();
+        caso_A();
       break;
       case(b_P):
-        case_P();
+        caso_P();
       break;
       case(b_R):
-        case_R();
+        caso_R();
       break;
       default:
         desativado();
@@ -58,13 +58,13 @@ switch (estado){
   case(ativado):
     switch(teclado){
       case(b_D):
-        case_D();
+        caso_D();
       break;
       case(b_R):
-        case_R();
+        caso_R();
       break;
       case(b_S):
-        case_S();
+        caso_S();
       break;
       default:
         ativado();
@@ -73,10 +73,10 @@ switch (estado){
   case(programacao):
     switch(teclado){
       case(b_R):
-        case_R();
+        caso_R();
       break;
       case(b_S):
-        case_S();
+        caso_S();
       break;
       default:
         programacao();
