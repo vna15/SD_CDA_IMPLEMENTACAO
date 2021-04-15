@@ -84,6 +84,15 @@ void secondLine(){
 	clk(0b00000000);
 }
 
+void position0(){
+	carregaMSG(0b00100000);
+	//TWDR = 0b00110000;
+	clk(0b00110000);
+	carregaMSG(0b00000000);
+	//TWDR = 0b00000000;
+	clk(0b00000000);
+}
+
 void shiftDisplayRight(){
 	carregaMSG(0b00000100);
 	//TWDR = 0b00000100;
