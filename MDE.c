@@ -141,3 +141,21 @@ void recuperacao(){
 
 
 }
+
+//--------rotinas essenciais--------
+void verifica_sensores_ativos(){
+	//reg_sensores_ativados:uint8_t;contendo bit a bit entre os 8 sensores estão ligados
+	
+	if (portB!=1b11111111)//se alguma das portas dos sensores foram ativadas
+	{
+		if (reg_sensores_ativados&1b11111110==1b11111110)SIRENE=1;
+		if (reg_sensores_ativados&1b11111101==1b11111101)SIRENE=1;
+		if (reg_sensores_ativados&1b11111011==1b11111011)SIRENE=1;
+		if (reg_sensores_ativados&1b11110111==1b11110111)SIRENE=1;
+		if (reg_sensores_ativados&1b11101111==1b11101111)SIRENE=1;
+		if (reg_sensores_ativados&1b11011111==1b11011111)SIRENE=1;
+		if (reg_sensores_ativados&1b10111111==1b10111111)SIRENE=1;
+		if (reg_sensores_ativados&1b01111111==1b01111111)SIRENE=1;
+	}
+	
+}
