@@ -96,13 +96,14 @@ switch (estado){
   break;
 }
 
-//transições dos estados
+//--------transições dos estados--------
 
 void caso_D(){
 
 }
 void caso_A(){
-
+	espera_tempo()//-->para implementar
+	estado=ativado;
 }
 void caso_P(){
 
@@ -121,13 +122,14 @@ void caso_R(){
 
 }
 
-//tarefas dos estados
+//--------tarefas dos estados--------
 
 void desativado(){
 
 }
 void ativado(){
-
+	imprime_display("ATIVADO:")//verificar qual a condição de envio de mensagem
+	verifica_sensores_ativos()
 }
 void programacao(){
 
