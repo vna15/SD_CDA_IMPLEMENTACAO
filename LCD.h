@@ -5,6 +5,14 @@
  * Author : Vinicius
  */ 
 
+/* Portas para se conectar ao PCF8574
+* E -> P7
+* RS -> P6
+* D7 -> P5
+* D6 -> P4
+* D5 -> P3
+* D4 -> P2
+*/
 
 #ifndef LCD_H
 #define LCD_H	   
@@ -32,7 +40,7 @@ void clk(uint8_t num){
 }
 
 void setLCD(){
-	// Função para fazer a configura??o inicial do LCD.
+	// FunÃ§Ã£o para fazer a configura??o inicial do LCD.
 	//DDRB = 0xFF;
 	//PORTB = 0x00;
 	//dly();
