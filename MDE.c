@@ -21,6 +21,12 @@ FUNÇÕES:
 -teste10():não implementada
 	def:temporizador para verificar se a tecla foi precionada por mais de 10 segundos, retorna true imediatamente após 10 segundos, false tecla fo solta antes.
 	obs: pode ser implementada com base em funções mais simples de verificação de teclas ou interrupções.
+
+
+VARIÁVEIS:
+-teclado:char; registrador salvo com o ultimo botão pressionado da interrupção do teclado.
+-estado:int8_t; registra representação da máquina de estados
+
 */
 const int8_t desativado=0;
 const int8_t ativado=1;
@@ -28,22 +34,22 @@ const int8_t programacao=2;
 const int8_t recuperacao=3;
 const int8_t panico=4;
 
-const int8_t b_1=0;
-const int8_t b_2=1;
-const int8_t b_3=2;
-const int8_t b_P=3;
-const int8_t b_4=4;
-const int8_t b_5=5;
-const int8_t b_6=6;
-const int8_t b_A=7;
-const int8_t b_7=8;
-const int8_t b_8=9;
-const int8_t b_9=10;
-const int8_t b_D=11;
-const int8_t b_R=12;
-const int8_t b_0=13;
-const int8_t b_S=14;
-const int8_t b_E=15;
+const uint8_t b_1=0;
+const uint8_t b_2=1;
+const uint8_t b_3=2;
+const uint8_t b_P=3;
+const uint8_t b_4=4;
+const uint8_t b_5=5;
+const uint8_t b_6=6;
+const uint8_t b_A=7;
+const uint8_t b_7=8;
+const uint8_t b_8=9;
+const uint8_t b_9=10;
+const uint8_t b_D=11;
+const uint8_t b_R=12;
+const uint8_t b_0=13;
+const uint8_t b_S=14;
+const uint8_t b_E=15;
 
 void inicializacao(){
   estado=desativado;
