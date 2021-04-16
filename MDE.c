@@ -99,27 +99,27 @@ switch (estado){
 //--------transições dos estados--------
 
 void caso_D(){
-
+	if(insere_verifica_senhas()){
+		estado=desativado;
+	}
 }
 void caso_A(){
-	espera_tempo()//-->para implementar
-	estado=ativado;
+	if(insere_verifica_senhas()){
+		estado=ativado;		
+	}
 }
 void caso_P(){
 
 }
 void caso_S(){
-
+	espera_tempo(/*tempo de saída da sala de controle*/);
+	estado=panico;
 }
 void caso_R(){
- 
-  if(teste10()){
-    estado=recuperacao;
+  if (estado!=recuperacao){
+  	if(teste10()) estado=recuperacao;
   }
-  else{
-    estado=desativado;
-  }
-
+  else estado=desativado;
 }
 
 //--------tarefas dos estados--------
@@ -128,8 +128,8 @@ void desativado(){
 
 }
 void ativado(){
-	imprime_display("ATIVADO:")//verificar qual a condição de envio de mensagem
-	verifica_sensores_ativos()
+	imprime_display("ATIVADO:");//verificar qual a condição de envio de mensagem
+	verifica_sensores_ativos();
 }
 void programacao(){
 
