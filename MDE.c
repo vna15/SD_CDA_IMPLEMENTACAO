@@ -201,14 +201,19 @@ void recuperacao(){
 //--------funções auxiliares--------
 
 void interrupcao_botoes(){ //configurar interrupção na borda de subida
-	enable_contador();
-	teclado=PORTD&in_teclado;//flag de qual botão precionado
-	precionado=true;
-	while(portDA==1){
-		if(contador>=1225)//valor numerado de 10 segundos
-			flag10=true;
+	teclado=PORTD&in_teclado;//flag de qual botão pressionado
+	pressionado=true;
+	if(PORTD&in_teclado==b_R){
+		enable_contador();
+		while(portDA==1){
+			if(contador>=1225)//valor numerado de 10 segundos
+				flag10=true;
+		}
+		disable_contador();	
 	}
-	disable_contador();	
+}
+interr_contador(){ //contador16bit(timer_1) normal (estouro->interrupção) contador==2^16/(clk*preset)
+	contador=contador+1;
 }
 
 bool insere_verifica_senhas(){
