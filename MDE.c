@@ -25,9 +25,14 @@ FUNÇÕES:
 
 VARIÁVEIS:
 -teclado:char; registrador salvo com o ultimo botão pressionado da interrupção do teclado.
+-
 -estado:int8_t; registra representação da máquina de estados
 
 */
+
+const uint8_t in_teclado=0b00001111;//portas de entrada do teclado
+
+
 const int8_t desativado=0;
 const int8_t ativado=1;
 const int8_t programacao=2;
@@ -50,9 +55,13 @@ const uint8_t b_R=12;
 const uint8_t b_0=13;
 const uint8_t b_S=14;
 const uint8_t b_E=15;
+const uint8_t b_invalida=255;//utilizada quando não se está precionando qualquer tecla
 
 int8_t estado=desativado;
 int8_t teclado=desativado;
+
+//definir headers de funções
+
 
 //estados e transições aqui
 void main(){
@@ -118,31 +127,36 @@ void main(){
 //--------transições dos estados--------
 
 void caso_D(){
+	teclado=b_invalida;
 	if(insere_verifica_senhas()){
 		estado=desativado;
 	}
 }
 void caso_A(){
+	teclado=b_invalida;
 	if(insere_verifica_senhas()){
 		espera_tempo(/*ativação*/);
 		estado=ativado;		
 	}
 }
 void caso_P(){
+	teclado=b_invalida;
 	if(insere_verifica_senha_mestre()){
 		estado=programacao;
 	}
 
 }
 void caso_S(){
+	teclado=b_invalida;
 	espera_tempo(/*ativação*/);
 	estado=panico;
 }
 void caso_R(){
-  if (estado!=recuperacao){
-  	if(teste10()) estado=recuperacao;
-  }
-  else estado=desativado;
+	teclado=b_invalida;
+	if (estado!=recuperacao){
+  		if(maior) estado=recuperacao;
+  	}
+  	else estado=desativado;
 }
 
 //--------tarefas dos estados--------
@@ -155,6 +169,17 @@ void ativado(){
 	verifica_sensores_ativos();
 }
 void programacao(){
+	if (permitido)
+	{
+		/* code */
+	}
+	else{
+		imprime_display("PROGRAMACAO:");
+	}
+	
+	while(teclado!=b_A|teclado!=b_D){
+
+	}
 
 }
 void panico(){
@@ -163,4 +188,20 @@ void panico(){
 void recuperacao(){
 
 
+}
+//--------funções auxiliares--------
+
+nonetype? interrupção_botoes(){ //configurar interrupção na borda de subida
+	if (teclado==(PORTD&in_teclado)){
+		if(contador>=1225)//valor numerado de 10 segundos
+	}
+	PORTD&in_teclado
+
+	
+}
+
+bool insere_verifica_senhas(){
+	senha[0]="1234"
+	senha[4]=
+	carro_senha=1<<carro_senha;
 }
