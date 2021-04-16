@@ -18,6 +18,8 @@ FUNÇÕES:
 -insere_verifica_senhas();insere_verifica_senha_mestre(): não implementados
 	def:função responsável por esperar a inserção de senha até que haja timeout, caso a senha seja incorreta mostrar em display, dá tempo para usuário visualizar e retorna false, se a senha corresponde as senhas configuradas retorna true.
 
+-verifica timeout(); inicia timers e verifica se ja houve estouro do tempo especificado; 
+
 -verificar_sensores_ativos():não implementada
 	def:checa portB se houve alteração, direciona acionamento de leds
 
@@ -199,6 +201,50 @@ void interrupcao_botoes(){ //configurar interrupção na borda de subida
 }
 
 bool insere_verifica_senhas(){
-	while(1){
+	uint8_t ver_senha[4]; //para conversão da mensagem do teclado para numeral
+	imprime_display("INSIRA SENHA MESTRE");
+	uint8_t i=0;
+	enable_contador()
+	while(i!=4){
+		if(precionado){
+			precionado=false;
+			switch(teclado){
+				case(b_0):
+					ver_senha[i]=0;
+				break;
+				case(b_1):
+					ver_senha[i]=1;
+				break;
+				case(b_2):
+					ver_senha[i]=2;
+				break;
+				case(b_3):
+					ver_senha[i]=3;
+				break;
+				case(b_4):
+					ver_senha[i]=4;
+				break;
+				case(b_5):
+					ver_senha[i]=5;
+				break;
+				case(b_6):
+					ver_senha[i]=6;
+				break;
+				case(b_7):
+					ver_senha[i]=7;
+				break;
+				case(b_8):
+					ver_senha[i]=8;
+				break;
+				case(b_9):
+					ver_senha[i]=9;
+				break;
+				default:
+					return false;
+			}
+		i++;
+		imprime_display("*");
+		}
 	}
+	disable_contador();
 }
