@@ -18,15 +18,21 @@ FUNÇÕES:
 -insere_verifica_senhas();insere_verifica_senha_mestre(): não implementados
 	def:função responsável por esperar a inserção de senha até que haja timeout, caso a senha seja incorreta mostrar em display, dá tempo para usuário visualizar e retorna false, se a senha corresponde as senhas configuradas retorna true.
 
--teste10():não implementada
-	def:temporizador para verificar se a tecla foi precionada por mais de 10 segundos, retorna true imediatamente após 10 segundos, false tecla fo solta antes.
-	obs: pode ser implementada com base em funções mais simples de verificação de teclas ou interrupções.
-
+-verificar_sensores_ativos():não implementada
+	def:checa portB se houve alteração, direciona acionamento de leds
 
 VARIÁVEIS:
--teclado:char; registrador salvo com o ultimo botão pressionado da interrupção do teclado.
--
--estado:int8_t; registra representação da máquina de estados
+-teclado:uint9_t; 	registrador salvo com o ultimo botão pressionado da interrupção do teclado.
+-contador:uint9_t; 	armazena os valores de vezes que o contador passou em modo de estouro (normal).
+-estado:int8_t; 	registra representação da máquina de estados.
+
+-precionado:bool; 	indica que um botão foi pressionado.
+-flag10:bool;		indica se o botão foi pressionado por mais de 10 segundos.
+
+CONCEITOS:
+-portDA;	pino do portD que está ligado a interrupção do MM74C922.
+-b_*;		flags de botões.
+
 
 */
 
@@ -59,7 +65,7 @@ const uint8_t b_invalida=255;//utilizada quando não se está precionando qualqu
 
 int8_t estado=desativado;
 int8_t teclado=b_invalida;
-uint8_t contador_aux=0;
+uint8_t contador=0;
 
 //definir headers de funções
 
@@ -67,7 +73,7 @@ uint8_t contador_aux=0;
 //estados e transições aqui
 void main(){
 	while(1){
-		contador_aux=0;
+		contador=0;
 		switch (estado){
 		  case(desativado):
 		    switch(teclado){
@@ -192,20 +198,18 @@ void recuperacao(){
 }
 //--------funções auxiliares--------
 
-nonetype? interrupcao_botoes(){ //configurar interrupção na borda de subida
+void interrupcao_botoes(){ //configurar interrupção na borda de subida
 	enable_contador();
-	if(teclado==(PORTD&in_teclado)){
-		if(contador_aux>=1225)//valor numerado de 10 segundos
+	teclado=PORTD&in_teclado;//flag de qual botão precionado
+	precionado=true;
+	while(portDA==1){
+		if(contador>=1225)//valor numerado de 10 segundos
 			flag10=true;
 	}
-	
-	teclado=PORTD&in_teclado; //flag de qual botão precionado
-	
-	disable_contador();
+	disable_contador();	
 }
 
 bool insere_verifica_senhas(){
-	senha[0]="1234"
-	senha[4]=
-	carro_senha=1<<carro_senha;
+	while(1){
+	}
 }
