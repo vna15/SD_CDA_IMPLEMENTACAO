@@ -38,14 +38,14 @@ CONCEITOS:
 
 */
 
-const uint8_t in_teclado=0b00001111;//portas de entrada do teclado
+const uint8_t in_teclado=0b00111100;//PORT D(2-5)
 
 
-const int8_t desativado=0;
-const int8_t ativado=1;
-const int8_t programacao=2;
-const int8_t recuperacao=3;
-const int8_t panico=4;
+const uint8_t desativado=0;
+const uint8_t ativado=1;
+const uint8_t programacao=2;
+const uint8_t recuperacao=3;
+const uint8_t panico=4;
 
 const uint8_t b_1=0;
 const uint8_t b_2=1;
@@ -65,16 +65,16 @@ const uint8_t b_S=14;
 const uint8_t b_E=15;
 const uint8_t b_invalida=255;//utilizada quando não se está precionando qualquer tecla
 
-int8_t estado=desativado;
-int8_t teclado=b_invalida;
-uint8_t contador=0;
+uint8_t estado=desativado;
+uint8_t teclado=b_invalida;
+uint8_t contador=0;//timer estouro conta ++1 (interrupção)
 
 //definir headers de funções
 
 
 //estados e transições aqui
 void main(){
-	while(1){
+	while(true){
 		contador=0;
 		switch (estado){
 		  case(desativado):
@@ -217,8 +217,8 @@ bool insere_verifica_senhas(){
 	uint8_t i=0;
 	enable_contador()
 	while(i!=4){
-		if(precionado){
-			precionado=false;
+		if(pressionado){
+			pressionado=false;
 			switch(teclado){
 				case(b_0):
 					ver_senha[i]=0;
