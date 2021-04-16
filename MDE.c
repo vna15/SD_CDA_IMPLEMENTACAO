@@ -51,69 +51,70 @@ const uint8_t b_0=13;
 const uint8_t b_S=14;
 const uint8_t b_E=15;
 
-void inicializacao(){
-  estado=desativado;
-}
+int8_t estado=desativado;
+int8_t teclado=desativado;
 
 //estados e transições aqui
-
-switch (estado){
-  case(desativado):
-    switch(teclado){
-      case(b_A):
-        caso_A();
-      break;
-      case(b_P):
-        caso_P();
-      break;
-      case(b_R):
-        caso_R();
-      break;
-      default:
-        desativado();
-    }
-  break;
-  case(ativado):
-    switch(teclado){
-      case(b_D):
-        caso_D();
-      break;
-      case(b_R):
-        caso_R();
-      break;
-      case(b_S):
-        caso_S();
-      break;
-      default:
-        ativado();
-      }
-  break;
-  case(programacao):
-    switch(teclado){
-      case(b_R):
-        caso_R();
-      break;
-      case(b_S):
-        caso_S();
-      break;
-      default:
-        programacao();
-      }
-  break;
-  case(recuperacao):
-    recuperacao();
-    estado=desativado;
-  break;
-  case(panico):
-    switch (teclado){
-      case(b_S):
-        estado=desativado;
-      default:
-          panico();
-      }
-  break;
+void main(){
+	while(1){
+		switch (estado){
+		  case(desativado):
+		    switch(teclado){
+		      case(b_A):
+		        caso_A();
+		      break;
+		      case(b_P):
+		        caso_P();
+		      break;
+		      case(b_R):
+		        caso_R();
+		      break;
+		      default:
+		        desativado();
+		    }
+		  break;
+		  case(ativado):
+		    switch(teclado){
+		      case(b_D):
+		        caso_D();
+		      break;
+		      case(b_R):
+		        caso_R();
+		      break;
+		      case(b_S):
+		        caso_S();
+		      break;
+		      default:
+		        ativado();
+		      }
+		  break;
+		  case(programacao):
+		    switch(teclado){
+		      case(b_R):
+		        caso_R();
+		      break;
+		      case(b_S):
+		        caso_S();
+		      break;
+		      default:
+		        programacao();
+		      }
+		  break;
+		  case(recuperacao):
+		    recuperacao();
+		    estado=desativado;
+		  break;
+		  case(panico):
+		    switch (teclado){
+		      case(b_S):
+		        estado=desativado;
+		      default:
+		          panico();
+		      }
+		  break;
+		}
+	}
 }
-
 //--------transições dos estados--------
 
 void caso_D(){
