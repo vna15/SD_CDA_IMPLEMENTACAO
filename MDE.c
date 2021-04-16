@@ -20,28 +20,6 @@ const int8_t programacao=2;
 const int8_t recuperacao=3;
 const int8_t panico=4;
 
-<<<<<<< Updated upstream
-const int8_t b_1=0;
-const int8_t b_2=1;
-const int8_t b_3=2;
-const int8_t b_P=3;
-const int8_t b_4=4;
-const int8_t b_5=5;
-const int8_t b_6=6;
-const int8_t b_A=7;
-const int8_t b_7=8;
-const int8_t b_8=9;
-const int8_t b_9=10;
-const int8_t b_D=11;
-const int8_t b_R=12;
-const int8_t b_0=13;
-const int8_t b_S=14;
-const int8_t b_E=15;
-
-void inicializacao(){
-  estado=desativado;
-}
-=======
 const uint8_t b_1=0;
 const uint8_t b_2=1;
 const uint8_t b_3=2;
@@ -62,7 +40,6 @@ const uint8_t b_invalida=255;//utilizada quando não se está precionando qualqu
 
 int8_t estado=desativado;
 int8_t teclado=desativado;
->>>>>>> Stashed changes
 
 //definir headers de funções
 
@@ -129,28 +106,6 @@ switch (estado){
 //transições dos estados
 
 void caso_D(){
-<<<<<<< Updated upstream
-
-}
-void caso_A(){
-
-}
-void caso_P(){
-
-}
-void caso_S(){
-
-}
-void caso_R(){
- 
-  if(teste10()){
-    estado=recuperacao;
-  }
-  else{
-    estado=desativado;
-  }
-
-=======
 	teclado=b_invalida;
 	if(insere_verifica_senhas()){
 		estado=desativado;
@@ -181,7 +136,6 @@ void caso_R(){
   		if(teste10()) estado=recuperacao;
   	}
   	else estado=desativado;
->>>>>>> Stashed changes
 }
 
 //tarefas dos estados
