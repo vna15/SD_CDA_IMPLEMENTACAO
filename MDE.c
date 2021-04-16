@@ -15,7 +15,7 @@ FUNÇÕES:
 	obs:pode ser implementada com parte do código que irá passar o tempo, levando como parâmetro o uint8_t em segundos.
 	obs2:talvez desnecessário, verificar necessidade, ou composição desta lógica em outras funções mais complexas.
 
--insere_verifica_senhas():não implementada
+-insere_verifica_senhas();insere_verifica_senha_mestre(): não implementados
 	def:função responsável por esperar a inserção de senha até que haja timeout, caso a senha seja incorreta mostrar em display, dá tempo para usuário visualizar e retorna false, se a senha corresponde as senhas configuradas retorna true.
 
 -teste10():não implementada
@@ -129,6 +129,9 @@ void caso_A(){
 	}
 }
 void caso_P(){
+	if(insere_verifica_senha_mestre()){
+		estado=programacao;
+	}
 
 }
 void caso_S(){
