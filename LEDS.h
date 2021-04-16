@@ -9,9 +9,9 @@
 */
 /* LED A -> P7 -> 1
    LED P -> P6 -> 2
-   LED Z1 -> P5 -> 3
-   LED Z2 -> P4  -> 4
-   LED Z3 -> P3 -> 5
+   LED A e Z1 -> P5 -> 3
+   LED A e Z2 -> P4  -> 4
+   LED A e Z3 -> P3 -> 5
    Qualquer outro valor apagará os leds*/
 
 void acenderLed(int num){
@@ -23,14 +23,15 @@ void acenderLed(int num){
 		led = 64;
 	}
 	else if(num==3){
-		led = 32;
+		led = 160;
 	}
 	else if(num==4){
-		led = 16;
+		led = 144;
 	}
 	else if(num==5){
-		led = 8;
+		led = 136;
 	}
+	
 	else{
 		led = 0;
 	}
