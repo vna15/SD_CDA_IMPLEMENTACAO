@@ -9,6 +9,18 @@ Descrição:
 OBSERVAÇÕES:
 @@ btn S deve ser botão seguro, pois é o unico caso em que pode haver loop indefinido
 
+FUNÇÕES:
+-espera_tempo():não implementada: 
+	def:função para estabelecer um contador que consumirá em segundos a quantidade de tempo **configurada pelo usuário**
+	obs:pode ser implementada com parte do código que irá passar o tempo, levando como parâmetro o uint8_t em segundos.
+	obs2:talvez desnecessário, verificar necessidade, ou composição desta lógica em outras funções mais complexas.
+
+-insere_verifica_senhas():não implementada
+	def:função responsável por esperar a inserção de senha até que haja timeout, caso a senha seja incorreta mostrar em display, dá tempo para usuário visualizar e retorna false, se a senha corresponde as senhas configuradas retorna true.
+
+-teste10():não implementada
+	def:temporizador para verificar se a tecla foi precionada por mais de 10 segundos, retorna true imediatamente após 10 segundos, false tecla fo solta antes.
+	obs: pode ser implementada com base em funções mais simples de verificação de teclas ou interrupções.
 */
 const int8_t desativado=0;
 const int8_t ativado=1;
