@@ -5,19 +5,12 @@
  * Author : Vinicius
  */ 
 
-/* Portas para se conectar ao PCF8574
-* E -> P7
-* RS -> P6
-* D7 -> P5
-* D6 -> P4
-* D5 -> P3
-* D4 -> P2
-*/
 
 #ifndef LCD_H
 #define LCD_H	   
 #include <avr/io.h>
 #include "TWI.h"
+#include "RTC.h"
 
 void dly(){
 	for (int i = 0; i<10000; i++){
@@ -40,7 +33,7 @@ void clk(uint8_t num){
 }
 
 void setLCD(){
-	// FunÃ§Ã£o para fazer a configura??o inicial do LCD.
+	// Função para fazer a configura??o inicial do LCD.
 	//DDRB = 0xFF;
 	//PORTB = 0x00;
 	//dly();
@@ -62,9 +55,9 @@ void setLCD(){
 	carregaMSG(0b00000000);
 	//TWDR = 0b00000000;
 	clk(0b00000000);
-	carregaMSG(0b00111000);
+	carregaMSG(0b00110000);
 	//TWDR = 0b00111000;
-	clk(0b00111000);
+	clk(0b00110000);
 	
 	// Mode Set
 	carregaMSG(0b00000000);
@@ -111,6 +104,20 @@ void shiftCursorRight(){
 	clk(0b00011000);
 }
 
+void blank(){
+	carregaMSG(0b01001000);
+	clk(0b01001000);
+	carregaMSG(0b01000000);
+	clk(0b01000000);	
+}
+
+void clearDisplay(){
+	carregaMSG(0b00000000);
+	clk(0b00000000);
+	carregaMSG(0b00000100);
+	clk(0b00000100);
+}
+
 void writeCaracter(uint8_t partOne, uint8_t partTwo){
 	carregaMSG(partOne);
 	//TWDR = partOne; 
@@ -121,14 +128,20 @@ void writeCaracter(uint8_t partOne, uint8_t partTwo){
 }
 
 void writeScreen(char* letters){
-	int letterOne = 0, letterTwo = 0; 
-	int tam = sizeof(letters);
+	int letterOne = 0, letterTwo = 0, tam = 0, x = 0; 
+	for(int j =0; j<32; j++){
+		if(letters[j] == '\0'){
+			break;
+		}
+		tam++;
+	}
 	for(int i = 0; i<tam; i++){
 		if(letters[i] == '\n'){
 			secondLine();
 		}
 		else if(letters[i] == ' '){
-			shiftCursorRight();
+			blank();
+			//shiftCursorRight();
 		}
 		else{
 		letterOne = (letters[i]>>2) | 64;
@@ -136,6 +149,66 @@ void writeScreen(char* letters){
 		writeCaracter(letterOne, letterTwo);
 		}
 	}
+}
+
+void ZeroinLeft(int number){
+	if(number<10){
+		writeScreen("0");
+	}
+}
+
+void dataHourScreen(){
+	int hora, min, seg, diaWeek, dia, mes, ano;
+	char horaC[9] = {'\0'};
+	char minC[9] = {'\0'};
+	char segC[9] = {'\0'};
+	char diaWeekC[9] = {'\0'};
+	char diaC[9] = {'\0'};
+	char mesC[9] = {'\0'};
+	char anoC[9] = {'\0'};
+	Start();
+	AddrEscravo(0xD1);
+	seg = readRTC(1);
+	min = readRTC(1);
+	hora = readRTC(1);
+	diaWeek = readRTC(1);
+	dia = readRTC(1);
+	mes = readRTC(1);
+	ano = readRTC(0);
+	Stop();
+	itoa(seg,segC,10);
+	itoa(min,minC,10);
+	itoa(hora,horaC,10);
+	itoa(dia,diaC,10);
+	itoa(mes,mesC,10);
+	itoa(ano,anoC,10);
+	Start();
+	AddrEscravo(0x40);
+	position0();
+	writeScreen("Hora: ");
+	ZeroinLeft(hora);
+	writeScreen(horaC);
+	writeScreen(":");
+	ZeroinLeft(min);
+	writeScreen(minC);
+	writeScreen(":");
+	ZeroinLeft(seg);
+	writeScreen(segC);
+	secondLine();
+	writeScreen("Data: ");
+	ZeroinLeft(dia);
+	writeScreen(diaC);
+	writeScreen("/");
+	ZeroinLeft(mes);
+	writeScreen(mesC);
+	writeScreen("/");
+	ZeroinLeft(ano);
+	writeScreen(anoC);
+	Stop();
+	Start();
+	AddrEscravo(0xD0);
+	writeRTC(00);
+	Stop();
 }
 
 #endif // LCD_H
