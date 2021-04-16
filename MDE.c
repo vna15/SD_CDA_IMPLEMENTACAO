@@ -123,6 +123,7 @@ void caso_D(){
 }
 void caso_A(){
 	if(insere_verifica_senhas()){
+		espera_tempo(/*ativação*/);
 		estado=ativado;		
 	}
 }
@@ -130,7 +131,7 @@ void caso_P(){
 
 }
 void caso_S(){
-	espera_tempo(/*tempo de saída da sala de controle*/);
+	espera_tempo(/*ativação*/);
 	estado=panico;
 }
 void caso_R(){
