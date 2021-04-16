@@ -1,5 +1,8 @@
+#ifndef TWI_H
+#define TWI_H
 #define F_CPU 16000000
 #include <avr\io.h>
+#include <util\delay.h>
 
 void ConfigTWI(){
 	//Configuração do módulo TWI
@@ -25,23 +28,27 @@ void AddrEscravo(int Addr){
 }
 
 void carregaMSG(uint8_t dado){
-	delay(10);
+	//_delay_ms(0.06);
 	//Envia o dado
-    	TWDR = dado;
-   	TWCR = ((1<< TWINT) | (1<<TWEN));
-   	while (!(TWCR & (1 <<TWINT)));
-	delay(10);
+	TWDR = dado;
+	TWCR = ((1<< TWINT) | (1<<TWEN));
+	while (!(TWCR & (1 <<TWINT)));
+	_delay_ms(0.06);
 }
 
 void Stop(){
 	//Envia uma condição de STOP
 	TWCR = ((1<< TWINT) | (1<<TWEN) | (1<<TWSTO));
 	//--------------------------------------------------------
-	delay(100);
+	_delay_ms(0.4);
 }
 
-uint8_t read_twi(uint8_t ack_dado) {
+int read_twi(uint8_t ack_dado) {
+	_delay_ms(0.1);
 	TWCR = ((1<< TWINT) | (1<<TWEN) | (ack_dado<<TWEA));
 	while ( !(TWCR & (1 <<TWINT)));
 	return TWDR;
+	_delay_ms(0.1);
 }
+
+#endif // TWI_H
