@@ -187,17 +187,14 @@ void panico(){
 }
 void recuperacao(){
 
-
 }
 //--------funções auxiliares--------
 
-nonetype? interrupção_botoes(){ //configurar interrupção na borda de subida
+nonetype? interrupcao_botoes(){ //configurar interrupção na borda de subida
 	if (teclado==(PORTD&in_teclado)){
 		if(contador>=1225)//valor numerado de 10 segundos
 	}
 	PORTD&in_teclado
-
-	
 }
 
 bool insere_verifica_senhas(){
