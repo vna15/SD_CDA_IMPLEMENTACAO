@@ -177,17 +177,6 @@ void ativado(){
 	verifica_sensores_ativos();
 }
 void programacao(){
-	if (permitido)
-	{
-		/* code */
-	}
-	else{
-		imprime_display("PROGRAMACAO:");
-	}
-	
-	while(teclado!=b_A|teclado!=b_D){
-
-	}
 
 }
 void panico(){
