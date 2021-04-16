@@ -28,7 +28,7 @@ VARIÁVEIS:
 -contador:uint9_t; 	armazena os valores de vezes que o contador passou em modo de estouro (normal).
 -estado:int8_t; 	registra representação da máquina de estados.
 
--precionado:bool; 	indica que um botão foi pressionado.
+-pressionado:bool; 	indica que um botão foi pressionado.
 -flag10:bool;		indica se o botão foi pressionado por mais de 10 segundos.
 
 CONCEITOS:
@@ -175,7 +175,7 @@ void desativado(){
 
 }
 void ativado(){
-	imprime_display("ATIVADO:");//verificar qual a condição de envio de mensagem
+	writeScreen("ATIVADO:");//verificar qual a condição de envio de mensagem
 	verifica_sensores_ativos();
 }
 void programacao(){
@@ -184,13 +184,13 @@ void programacao(){
 		/* code */
 	}
 	else{
-		imprime_display("PROGRAMACAO:");
+		writeScreen("PROGRAMACAO:");
 	}
 	
 	while(teclado!=b_A|teclado!=b_D){
 
 	}
-
+	estado=desativado;
 }
 void panico(){
 
@@ -254,7 +254,7 @@ bool insere_verifica_senhas(){
 					return false;
 			}
 		i++;
-		imprime_display("*");
+		writeScreen("*");
 		}
 	}
 	disable_contador();
