@@ -58,7 +58,8 @@ const uint8_t b_E=15;
 const uint8_t b_invalida=255;//utilizada quando não se está precionando qualquer tecla
 
 int8_t estado=desativado;
-int8_t teclado=desativado;
+int8_t teclado=b_invalida;
+uint8_t contador_aux=0;
 
 //definir headers de funções
 
@@ -66,6 +67,7 @@ int8_t teclado=desativado;
 //estados e transições aqui
 void main(){
 	while(1){
+		contador_aux=0;
 		switch (estado){
 		  case(desativado):
 		    switch(teclado){
@@ -191,10 +193,15 @@ void recuperacao(){
 //--------funções auxiliares--------
 
 nonetype? interrupcao_botoes(){ //configurar interrupção na borda de subida
-	if (teclado==(PORTD&in_teclado)){
-		if(contador>=1225)//valor numerado de 10 segundos
+	enable_contador();
+	if(teclado==(PORTD&in_teclado)){
+		if(contador_aux>=1225)//valor numerado de 10 segundos
+			flag10=true;
 	}
-	PORTD&in_teclado
+	
+	teclado=PORTD&in_teclado; //flag de qual botão precionado
+	
+	disable_contador();
 }
 
 bool insere_verifica_senhas(){
