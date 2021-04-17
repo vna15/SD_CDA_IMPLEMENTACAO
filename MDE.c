@@ -84,7 +84,7 @@ uint8_t contador=0;//timer estouro conta ++1 (interrupção)
 uint8_t contador_timeout=0
 bool ativar=false;//flag de ativar/desativar ..sensores..zona.
 bool pressionado=false;
-uint senhas[4]={1234};
+int senhas[4]={1234,-1,-1,-1};
 bool senha_aberta[4]={true,false,false,false};
 
 //definir headers de funções
@@ -140,7 +140,8 @@ void main(){
 		        estado=p_desativar;
 		      break;
 		      default:
-		        programacao();
+		      	//apertaE
+		        //programacao();
 		      }
 		  break;
 		  case(recuperacao):
@@ -357,63 +358,124 @@ interr_contador2(){ //contador8bit(timer_2) normal (estouro->interrupção) cont
 	contador=contador+1;
 }
 
-bool insere_verifica_senhas(){
-	uint8_t ver_senha[4]; //para conversão da mensagem do teclado para numeral
-	imprime_display("INSIRA SENHA MESTRE");
-	uint8_t i=0;
-	enable_contador()
-	while(i!=4){
-		if(pressionado){
-			contador=0;
-			pressionado=false;
-			switch(teclado){
-				case(b_0):
-					ver_senha[i]=0;
-				break;
-				case(b_1):
-					ver_senha[i]=1;
-				break;
-				case(b_2):
-					ver_senha[i]=2;
-				break;
-				case(b_3):
-					ver_senha[i]=3;
-				break;
-				case(b_4):
-					ver_senha[i]=4;
-				break;
-				case(b_5):
-					ver_senha[i]=5;
-				break;
-				case(b_6):
-					ver_senha[i]=6;
-				break;
-				case(b_7):
-					ver_senha[i]=7;
-				break;
-				case(b_8):
-					ver_senha[i]=8;
-				break;
-				case(b_9):
-					ver_senha[i]=9;
-				break;
-				case(b_R):
-					return false;
-				break;
-				default:
-					return false;
-
+bool insere_verifica_senhas(bool mestre){
+	imprime_display("INSIRA SENHA");
+	//enable_contador()
+	int resposta=inserir_senha();
+	if(resposta>0){
+		if(!mestre){
+			for (uint8_t i = 0; i < 4; ++i){
+				if (senha_aberta[i]){
+					if(resposta==senha[i]){
+						criar_log_UART("usuario")
+					}
+				}
 			}
-		i++;
-		writeScreen("*");
+		}
+		else{
+			if(senha[0]==resposta){
+				imprime_display("SENHA MESTRE CORRETA");
+				criar_log_UART("usuario mestre")
+			}
 		}
 	}
-	disable_contador();
+	//disable_contador();
+	return
 
 	//tem mais//
 }
 
+int inserir_senha(){
+	uint8_t ver_senha[4]; //para conversão da mensagem do teclado para numeral
+	uint8_t index=0;
+	while(index!=4){
+		if(pressionado){
+			//contador=0;
+			pressionado=false;
+			switch(teclado){
+				case(b_0):
+					ver_senha[index]=0;
+				break;
+				case(b_1):
+					ver_senha[index]=1;
+				break;
+				case(b_2):
+					ver_senha[index]=2;
+				break;
+				case(b_3):
+					ver_senha[index]=3;
+				break;
+				case(b_4):
+					ver_senha[index]=4;
+				break;
+				case(b_5):
+					ver_senha[index]=5;
+				break;
+				case(b_6):
+					ver_senha[index]=6;
+				break;
+				case(b_7):
+					ver_senha[index]=7;
+				break;
+				case(b_8):
+					ver_senha[index]=8;
+				break;
+				case(b_9):
+					ver_senha[index]=9;
+				break;
+				default:
+					return -1;
+			}
+		index++;
+		writeScreen("*");
+		}
+	}
+	while(true){
+		switch (teclado){
+			case(b_E):
+	        	int resposta=0;
+				int MCDU=1;
+				for (index=3; index >=0; --index){
+					resposta=resposta+ver_senha[index]*MCDU;
+					MCDU=MCDU*10;
+				}
+				return resposta;
+	      	break;
+	      	case(b_R):
+	        	caso_R();
+	        	return -1;
+	      	break;
+	      	case(b_S):
+	        	caso_S();
+	        	return -1;
+	      	break;
+	      	default:
+	      	break;
+		}
+	}
+	
+}
+
 void alterar_senha(uint8_t index){
-	senha[index]=
-	senha_aberta[index]=true
+	int senha_aux=-1;
+	while(senha_aux<0){
+		senha_aux=inserir_senha();	
+	}
+	while(!pressionado){
+		switch (teclado){
+			case(b_E):
+	        	senha[index]=resposta;
+	      	break;
+	      	case(b_R):
+	        	caso_R();
+	      	break;
+	      	case(b_S):
+	        	caso_S();
+	      	break;
+	      	default:
+	      		delay(1);//apenas convencionado
+	      	break;
+		}
+	}
+	senha_aberta[index]=true;
 }
