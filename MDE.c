@@ -168,10 +168,8 @@ void caso_S(){
 }
 void caso_R(){
 	teclado=b_invalida;
-	if (estado!=recuperacao){
-  		if(flag10) estado=recuperacao;
-  	}
-  	else estado=desativado;
+	if(flag10) estado=recuperacao;
+	else estado=desativado;
 }
 
 //--------tarefas dos estados--------
