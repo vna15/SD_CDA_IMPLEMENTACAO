@@ -72,6 +72,7 @@ const uint8_t b_invalida=255;//utilizada quando não se está precionando qualqu
 uint8_t estado=desativado;
 uint8_t teclado=b_invalida;
 uint8_t contador=0;//timer estouro conta ++1 (interrupção)
+uint8_t contador_timeout=0
 
 //definir headers de funções
 
@@ -168,7 +169,7 @@ void caso_S(){
 void caso_R(){
 	teclado=b_invalida;
 	if (estado!=recuperacao){
-  		if(maior) estado=recuperacao;
+  		if(flag10) estado=recuperacao;
   	}
   	else estado=desativado;
 }
@@ -216,7 +217,11 @@ void interrupcao_botoes(){ //configurar interrupção na borda de subida
 		disable_contador();	
 	}
 }
-interr_contador(){ //contador16bit(timer_1) normal (estouro->interrupção) contador==2^16/(clk*preset)
+interr_contador1(){ //contador16bit(timer_1) normal (estouro->interrupção) contador==2^16/(clk*preset)
+	//configurar para interrupção a cada segundo
+	contador_timeout=contador_timeout+1;
+}
+interr_contador2(){ //contador8bit(timer_2) normal (estouro->interrupção) contador==2^8/(clk*preset)
 	contador=contador+1;
 }
 
@@ -227,6 +232,7 @@ bool insere_verifica_senhas(){
 	enable_contador()
 	while(i!=4){
 		if(pressionado){
+			contador=0;
 			pressionado=false;
 			switch(teclado){
 				case(b_0):
