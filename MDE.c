@@ -339,13 +339,14 @@ void recuperacao(){
 void interrupcao_botoes(){ //configurar interrupção na borda de subida
 	teclado=PORTD&in_teclado;//flag de qual botão pressionado
 	pressionado=true;
+	contador=0;
 	if(PORTD&in_teclado==b_R){
-		enable_contador();
 		while(portDA==1){
-			if(contador>=1225)//valor numerado de 10 segundos
+			dealay(100);
+			contador++;
+			if(contador>=100)//valor numerado de 10 segundos
 				flag10=true;
 		}
-		disable_contador();	
 	}
 }
 interr_contador1(){ //contador16bit(timer_1) normal (estouro->interrupção) contador==2^16/(clk*preset)
