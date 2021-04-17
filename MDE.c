@@ -57,6 +57,8 @@ const uint8_t p_sel_zona=8;
 const uint8_t p_tempo_ativacao=9;
 const uint8_t p_tempo_timeout=10;
 const uint8_t p_tempo_sirene=11;
+const uint8_t s_ativar=11;
+const uint8_t s_desativar=11;
 
 const uint8_t b_1=0;
 const uint8_t b_4=1;
@@ -127,6 +129,12 @@ void main(){
 		      case(b_S):
 		        caso_S();
 		      break;
+		      case(b_A):
+		        estado=s_ativar;
+		      break;
+		      case(b_D):
+		        estado=s_desativar;
+		      break;
 		      default:
 		        programacao();
 		      }
@@ -143,15 +151,75 @@ void main(){
 		          panico();
 		      }
 		  break;
+		  case s_ativar:
+		  	switch (teclado){
+		  		case(b_2):
+			      	estado=p_alterar_senha;
+			    break;
+			    case(b_3):
+			      	estado=p_sensor_config;
+			      	ativar=true;
+			    break;
+			    case(b_4):
+			      	estado=p_sensor_zona;
+			      	ativar=true;
+			    break;
+			    case(b_5):
+			      	estado=p_sel_zona;
+			      	ativar=true;
+			    break;
+			    case(b_6):
+			      	estado=p_tempo_ativacao;
+			    break;
+			    case(b_7):
+			      	estado=p_tempo_timeout;
+			    break;
+			    case(b_8):
+			      	estado=p_tempo_sirene;
+			    break;
+			    default:
+			    	verificar_timeout();
+			}
+		  case s_desativar:
+			switch (teclado){
+			    case(b_3):
+			      	estado=p_sensor_config;
+			      	ativar=false;
+			    break;
+			    case(b_4):
+			      	estado=p_sensor_zona;
+			      	ativar=false;
+			    break;
+			    case(b_5):
+			      	estado=p_sel_zona;
+			      	ativar=false;
+			    break;
+			    default:
+			    	verificar_timeout();
+			}
+
 		  case p_alterar_senha :
 			  switch (teclado){
+			  	  case(b_R):
+			        caso_R();
+			      break;
+			      case(b_S):
+			        caso_S();
+			      break;
 			      case(b_A):
-			      	
+			      	exec()
+			      break;
 			      default:
-			          verificar_timeout();
+			      	verificar_timeout();
 			      }
 		  break;
 		  case p_sensor_config :
+		  	switch (teclado){
+			      case(b_A):
+			      	
+			      default:
+			      	verificar_timeout();
+			      }
 		  break;
 		  case p_sensor_zona :
 		  break;
