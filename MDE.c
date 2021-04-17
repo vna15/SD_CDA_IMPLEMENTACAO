@@ -367,7 +367,12 @@ bool insere_verifica_senhas(bool mestre){
 			for (uint8_t i = 0; i < 4; ++i){
 				if (senha_aberta[i]){
 					if(resposta==senha[i]){
-						criar_log_UART("usuario")
+						criar_log_UART("usuario x")
+						return true;
+					}
+					else{
+						imprime_display("SENHA INCORRETA");
+						return false;
 					}
 				}
 			}
@@ -377,11 +382,14 @@ bool insere_verifica_senhas(bool mestre){
 				imprime_display("SENHA MESTRE CORRETA");
 				criar_log_UART("usuario mestre")
 			}
+			else{
+				imprime_display("SENHA MESTRE INCORRETA");
+				return false;
+			}
 		}
 	}
 	//disable_contador();
-	return
-
+	return true;
 	//tem mais//
 }
 
