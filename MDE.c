@@ -246,6 +246,7 @@ void main(){
 		        	caso_S();
 		      	break;
 			    default:
+			    	verificar_timeout();
 			      }
 		  break;
 		  case p_sensor_zona :
@@ -319,6 +320,7 @@ int programacao(){
 			break;
 		}
 		if(contador_timeout>/*timeout*/){//colocar timer1 para configuração de 1s para setar mais facil a configuração
+			estado=desativado;
 			return 1;
 		}
 	}
@@ -393,8 +395,12 @@ bool insere_verifica_senhas(){
 				case(b_9):
 					ver_senha[i]=9;
 				break;
+				case(b_R):
+					return false;
+				break;
 				default:
 					return false;
+
 			}
 		i++;
 		writeScreen("*");
