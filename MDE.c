@@ -35,6 +35,10 @@ CONCEITOS:
 -portDA;	pino do portD que está ligado a interrupção do MM74C922.
 -b_*;		flags de botões.
 
+TIMERS:
+TIMER_1:16 BITS - contador de timeout
+TIMER_0:8 BITS  - contador normal
+
 
 */
 
@@ -48,20 +52,20 @@ const uint8_t recuperacao=3;
 const uint8_t panico=4;
 
 const uint8_t b_1=0;
-const uint8_t b_2=1;
-const uint8_t b_3=2;
-const uint8_t b_P=3;
-const uint8_t b_4=4;
+const uint8_t b_4=1;
+const uint8_t b_7=2;
+const uint8_t b_R=3;
+const uint8_t b_2=4;
 const uint8_t b_5=5;
-const uint8_t b_6=6;
-const uint8_t b_A=7;
-const uint8_t b_7=8;
-const uint8_t b_8=9;
+const uint8_t b_8=6;
+const uint8_t b_0=7;
+const uint8_t b_3=8;
+const uint8_t b_6=9;
 const uint8_t b_9=10;
-const uint8_t b_D=11;
-const uint8_t b_R=12;
-const uint8_t b_0=13;
-const uint8_t b_S=14;
+const uint8_t b_S=11;
+const uint8_t b_P=12;
+const uint8_t b_A=13;
+const uint8_t b_D=14;
 const uint8_t b_E=15;
 const uint8_t b_invalida=255;//utilizada quando não se está precionando qualquer tecla
 
