@@ -82,6 +82,9 @@ uint8_t estado=desativado;
 uint8_t teclado=b_invalida;
 uint8_t contador=0;//timer estouro conta ++1 (interrupção)
 uint8_t contador_timeout=0
+bool ativar=false;//flag de ativar/desativar ..sensores..zona.
+uint senhas[4]={1234};
+bool senha_aberta[4]={true,false,false,false};
 
 //definir headers de funções
 
