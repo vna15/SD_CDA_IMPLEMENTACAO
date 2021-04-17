@@ -183,18 +183,26 @@ void ativado(){
 	writeScreen("ATIVADO:");//verificar qual a condição de envio de mensagem
 	verifica_sensores_ativos();
 }
-void programacao(){
-	if (permitido)
-	{
-		/* code */
-	}
-	else{
-		writeScreen("PROGRAMACAO:");
-	}
-	
-	while(teclado!=b_A|teclado!=b_D){
 
+
+int programacao(){
+	writeScreen("PROGRAMACAO:");
+	enable_contador_timeout();
+	int contador_timeout=0;
+	while(true){
+		switch(teclado){
+			case b_R:
+				return 1;
+			break;
+			case b_S:
+				return 1;
+			break;
+		}
+		if(contador_timeout>/*timeout*/){//colocar timer1 para configuração de 1s para setar mais facil a configuração
+			return 1;
+		}
 	}
+	disable_contador_timeout();
 	estado=desativado;
 }
 void panico(){
