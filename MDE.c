@@ -50,6 +50,13 @@ const uint8_t ativado=1;
 const uint8_t programacao=2;
 const uint8_t recuperacao=3;
 const uint8_t panico=4;
+const uint8_t p_alterar_senha=5;
+const uint8_t p_sensor_config=6;
+const uint8_t p_sensor_zona=7;
+const uint8_t p_sel_zona=8;
+const uint8_t p_tempo_ativacao=9;
+const uint8_t p_tempo_timeout=10;
+const uint8_t p_tempo_sirene=11;
 
 const uint8_t b_1=0;
 const uint8_t b_4=1;
@@ -135,6 +142,26 @@ void main(){
 		      default:
 		          panico();
 		      }
+		  break;
+		  case p_alterar_senha :
+			  switch (teclado){
+			      case(b_A):
+			      	
+			      default:
+			          verificar_timeout();
+			      }
+		  break;
+		  case p_sensor_config :
+		  break;
+		  case p_sensor_zona :
+		  break;
+		  case p_sel_zona :
+		  break;
+		  case p_tempo_ativacao :
+		  break;
+		  case p_tempo_timeout :
+		  break;
+		  case p_tempo_sirene :
 		  break;
 		}
 	}
