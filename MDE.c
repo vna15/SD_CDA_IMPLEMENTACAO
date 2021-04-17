@@ -342,7 +342,7 @@ void interrupcao_botoes(){ //configurar interrupção na borda de subida
 	contador=0;
 	if(PORTD&in_teclado==b_R){
 		while(portDA==1){
-			dealay(100);
+			delay(100);
 			contador++;
 			if(contador>=100)//valor numerado de 10 segundos
 				flag10=true;
