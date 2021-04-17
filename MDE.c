@@ -24,8 +24,8 @@ FUNÇÕES:
 	def:checa portB se houve alteração, direciona acionamento de leds
 
 VARIÁVEIS:
--teclado:uint9_t; 	registrador salvo com o ultimo botão pressionado da interrupção do teclado.
--contador:uint9_t; 	armazena os valores de vezes que o contador passou em modo de estouro (normal).
+-teclado:uint8_t; 	registrador salvo com o ultimo botão pressionado da interrupção do teclado.
+-contador:uint8_t; 	armazena os valores de vezes que o contador passou em modo de estouro (normal).
 -estado:int8_t; 	registra representação da máquina de estados.
 
 -pressionado:bool; 	indica que um botão foi pressionado.
@@ -76,13 +76,14 @@ const uint8_t b_P=12;
 const uint8_t b_A=13;
 const uint8_t b_D=14;
 const uint8_t b_E=15;
-const uint8_t b_invalida=255;//utilizada quando não se está precionando qualquer tecla
+const uint8_t b_invalida=255;//utilizada quando não se está pressionando qualquer tecla
 
 uint8_t estado=desativado;
 uint8_t teclado=b_invalida;
 uint8_t contador=0;//timer estouro conta ++1 (interrupção)
 uint8_t contador_timeout=0
 bool ativar=false;//flag de ativar/desativar ..sensores..zona.
+bool pressionado=false;
 uint senhas[4]={1234};
 bool senha_aberta[4]={true,false,false,false};
 
