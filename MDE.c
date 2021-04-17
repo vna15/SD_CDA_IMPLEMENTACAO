@@ -180,6 +180,12 @@ void main(){
 			    case(b_8):
 			      	estado=p_tempo_sirene;
 			    break;
+			    case(b_R):
+		        	caso_R();
+		      	break;
+		      	case(b_S):
+		        	caso_S();
+		      	break;
 			    default:
 			    	verificar_timeout();
 			}
@@ -197,31 +203,49 @@ void main(){
 			      	estado=p_sel_zona;
 			      	ativar=false;
 			    break;
+			    case(b_R):
+		        	caso_R();
+		      	break;
+		      	case(b_S):
+		        	caso_S();
+		      	break;
 			    default:
 			    	verificar_timeout();
 			}
 
 		  case p_alterar_senha :
 			  switch (teclado){
-			  	  case(b_R):
-			        caso_R();
+			  	  case(b_0):
+			        alterar_senha(0);
 			      break;
-			      case(b_S):
-			        caso_S();
+			      case(b_1):
+			        alterar_senha(1);
 			      break;
-			      case(b_A):
-			      	exec()
+			      case(b_2):
+			      	alterar_senha(2);
 			      break;
+			      case(b_3):
+			      	alterar_senha(3);
+			      break;
+			      case(b_R):
+		        	caso_R();
+		      	  break;
+		      	  case(b_S):
+		        	caso_S();
+		      	  break;
 			      default:
 			      	verificar_timeout();
 			      }
 		  break;
 		  case p_sensor_config :
 		  	switch (teclado){
-			      case(b_A):
-			      	
-			      default:
-			      	verificar_timeout();
+			    case(b_R):
+		        	caso_R();
+		      	break;
+		      	case(b_S):
+		        	caso_S();
+		      	break;
+			    default:
 			      }
 		  break;
 		  case p_sensor_zona :
