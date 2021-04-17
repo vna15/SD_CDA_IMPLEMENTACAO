@@ -407,4 +407,11 @@ bool insere_verifica_senhas(){
 		}
 	}
 	disable_contador();
+
+	//tem mais//
+}
+
+void alterar_senha(uint8_t index){
+	senha[index]=
+	senha_aberta[index]=true
 }
