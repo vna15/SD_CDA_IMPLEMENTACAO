@@ -57,8 +57,8 @@ const uint8_t p_sel_zona=8;
 const uint8_t p_tempo_ativacao=9;
 const uint8_t p_tempo_timeout=10;
 const uint8_t p_tempo_sirene=11;
-const uint8_t s_ativar=11;
-const uint8_t s_desativar=11;
+const uint8_t p_ativar=11;
+const uint8_t p_desativar=11;
 
 const uint8_t b_1=0;
 const uint8_t b_4=1;
@@ -130,10 +130,10 @@ void main(){
 		        caso_S();
 		      break;
 		      case(b_A):
-		        estado=s_ativar;
+		        estado=p_ativar;
 		      break;
 		      case(b_D):
-		        estado=s_desativar;
+		        estado=p_desativar;
 		      break;
 		      default:
 		        programacao();
@@ -151,7 +151,7 @@ void main(){
 		          panico();
 		      }
 		  break;
-		  case s_ativar:
+		  case p_ativar:
 		  	switch (teclado){
 		  		case(b_2):
 			      	estado=p_alterar_senha;
@@ -180,7 +180,7 @@ void main(){
 			    default:
 			    	verificar_timeout();
 			}
-		  case s_desativar:
+		  case p_desativar:
 			switch (teclado){
 			    case(b_3):
 			      	estado=p_sensor_config;
