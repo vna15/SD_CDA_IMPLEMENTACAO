@@ -436,36 +436,37 @@ int main(void)
 						teclado = 255;
 						do{
 							if(teclado==b_1){
-							//teclado = 255;
 							clearDisplay();
 							writeScreen("1");
 							_delay_ms(10);
-							//if(flagSensorZona == true){
+							if(flagSensorZona == true){
 							zona1[0] = 1;
-							//}else{
-							//zona1[0] = 0;
-							//}
-							//estado = desativado;
-							//break;
+							}else{
+							zona1[0] = 0;
+							}
+							}
+							if(teclado==b_2){
+								clearDisplay();
+								writeScreen("2");
+								_delay_ms(10);
+								if(flagSensorZona == true){
+									zona1[0] = 1;
+									}else{
+									zona1[0] = 0;
+								}
+							}
+							if(teclado==b_3){
+								//teclado = 255;
+								clearDisplay();
+								writeScreen("3");
+								_delay_ms(10);
+								if(flagSensorZona == true){
+									zona1[0] = 1;
+									}else{
+									zona1[0] = 0;
+								}
 							}
 							}while(teclado!=b_E);
-							/*case b_2:
-							if(flagSensorZona == true){
-								zona2[0] = 1;
-								}else{
-								zona2[0] = 0;
-							}
-							waitE();
-							break;
-							case b_3:
-							if(flagSensorZona == true){
-								zona3[0] = 1;
-								}else{
-								zona3[0] = 0;
-							}
-							waitE();
-							break;
-						}*/
 					break;
 					/*case b_1:
 						switch(teclado){
