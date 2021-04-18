@@ -268,20 +268,20 @@ void main(){
 
 void caso_D(){
 	teclado=b_invalida;
-	if(insere_verifica_senhas()){
+	if(insere_verifica_senhas(false)){
 		estado=desativado;
 	}
 }
 void caso_A(){
 	teclado=b_invalida;
-	if(insere_verifica_senhas()){
+	if(insere_verifica_senhas(false)){
 		espera_tempo(/*ativação*/);
 		estado=ativado;		
 	}
 }
 void caso_P(){
 	teclado=b_invalida;
-	if(insere_verifica_senha_mestre()){
+	if(insere_verifica_senhas(true)){
 		estado=programacao;
 	}
 
