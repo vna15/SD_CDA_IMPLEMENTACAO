@@ -308,9 +308,9 @@ void ativado(){
 }
 
 
-int programacao(){
+void programacao(){
 	writeScreen("PROGRAMACAO:");
-	enable_contador_timeout();
+/*	enable_contador_timeout();
 	int contador_timeout=0;
 	while(true){
 		switch(teclado){
@@ -321,13 +321,16 @@ int programacao(){
 				return 1;
 			break;
 		}
-		if(contador_timeout>/*timeout*/){//colocar timer1 para configuração de 1s para setar mais facil a configuração
+		if(contador_timeout>//timeout/){//colocar timer1 para configuração de 1s para setar mais facil a configuração
 			estado=desativado;
 			return 1;
 		}
 	}
 	disable_contador_timeout();
 	estado=desativado;
+
+*/
+
 }
 void panico(){
 
