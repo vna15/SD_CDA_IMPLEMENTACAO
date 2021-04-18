@@ -263,38 +263,37 @@ int main(void)
 					break;
 					*/
 					default:
-						//estado = p_ativar;
 					break;
 					//verificar_timeout();
 			}
 			case p_desativar:
-			switch (teclado){
-				case(b_3):
-				estado=p_sensor_config;
-				ativar=false;
-				break;
-				case(b_4):
-				estado=p_sensor_zona;
-				ativar=false;
-				break;
-				case(b_5):
-				estado=p_sel_zona;
-				ativar=false;
-				break;
-				case(b_R):
-				//caso_R();
-				break;
-				case(b_S):
-				//caso_S();
-				break;
-				default:
-				break;
-				//verificar_timeout();
+				switch (teclado){
+					case(b_3):
+					estado=p_sensor_config;
+					ativar=false;
+					break;
+					case(b_4):
+					estado=p_sensor_zona;
+					ativar=false;
+					break;
+					case(b_5):
+					estado=p_sel_zona;
+					ativar=false;
+					break;
+					case(b_R):
+					//caso_R();
+					break;
+					case(b_S):
+					//caso_S();
+					break;
+					default:
+					break;
+					//verificar_timeout();
 			}
 
 			case p_alterar_senha :
 				clearDisplay();
-				writeScreen("Selecione senha:\n");
+				writeScreen("Alterar_senha:\n");
 				_delay_ms(100);
 				switch (teclado){
 					case(b_0):
@@ -316,7 +315,6 @@ int main(void)
 					//caso_S();
 					break;
 					default:
-					estado = p_alterar_senha;
 					break;
 			}
 			break;
