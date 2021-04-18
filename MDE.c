@@ -300,15 +300,21 @@ void caso_R(){
 //--------tarefas dos estados--------
 
 void desativado(){
+	buzzer=0;
 
 }
 void ativado(){
+	buzzer=0;
 	writeScreen("ATIVADO:");//verificar qual a condição de envio de mensagem
-	verifica_sensores_ativos();
+	if(verifica_sensores_ativos()){
+		buzzer=1;
+		delay(tempo_de_sirene);
+	}
 }
 
 
 void programacao(){
+	buzzer=0;
 	writeScreen("PROGRAMACAO:");
 /*	enable_contador_timeout();
 	int contador_timeout=0;
@@ -333,7 +339,7 @@ void programacao(){
 
 }
 void panico(){
-
+	buzzer=1;
 }
 void recuperacao(){
 
