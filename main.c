@@ -52,7 +52,7 @@
 int8_t estado=desativado;
 int8_t teclado=b_invalida;
 
-uint8_t reg_sensores_ativados[8] = {0,0,0,0,0,0,0,0};
+uint8_t reg_sensores_ativados[8] = {0,0,0,0,0,0,0,1};
 uint8_t zona1[8] = {0,0,0,0,0,0,0,0};
 uint8_t zona2[8] = {0,0,0,0,0,0,0,0};
 uint8_t zona3[8] = {0,0,0,0,0,0,0,0};
@@ -106,6 +106,7 @@ int main(void)
 	sei();
 	
 	bool varSenha = false;
+	estado = p_sensor_zona;
 	
    while(1)
    {	
@@ -419,54 +420,54 @@ int main(void)
 			break;
 			case p_sensor_zona:
 				switch(teclado){
+					case b_E:
+						clearDisplay();
+						writeScreen("Sensor 0 na Zona");
+						_delay_ms(10);
+						estado = desativado;
+					break;
 					case b_0:
-					clearDisplay();
-					writeScreen("0");
-					_delay_ms(10);
-					//teclado = 255;
-						switch(teclado){
-							case b_1:
-								teclado = 255;
-								clearDisplay();
-								writeScreen("1");
-								_delay_ms(10);
-								if(flagSensorZona == true){
-									zona1[0] = 1;
+						clearDisplay();
+						writeScreen("0");
+						_delay_ms(100);
+						clearDisplay();
+						writeScreen("Sel zona");
+						_delay_ms(10);
+						teclado = 255;
+						do{
+							if(teclado==b_1){
+							//teclado = 255;
+							clearDisplay();
+							writeScreen("1");
+							_delay_ms(10);
+							//if(flagSensorZona == true){
+							zona1[0] = 1;
+							//}else{
+							//zona1[0] = 0;
+							//}
+							//estado = desativado;
+							//break;
+							}
+							}while(teclado!=b_E);
+							/*case b_2:
+							if(flagSensorZona == true){
+								zona2[0] = 1;
 								}else{
-									//zona1[0] = 0;
-								}
-								waitE();
-							break;
-							case b_2:
-								if(flagSensorZona == true){
-									zona2[0] = 1;
-									}else{
-									zona2[0] = 0;
-								}
-								waitE();
+								zona2[0] = 0;
+							}
+							waitE();
 							break;
 							case b_3:
-								if(flagSensorZona == true){
-									zona3[0] = 1;
-									}else{
-									zona3[0] = 0;
-								}
-								waitE();
+							if(flagSensorZona == true){
+								zona3[0] = 1;
+								}else{
+								zona3[0] = 0;
+							}
+							waitE();
 							break;
-							case 103:
-								clearDisplay();
-								writeScreen("Sensor 0 na Zona");
-								_delay_ms(10);
-								estado = desativado;
-							break;
-							default:
-								clearDisplay();
-								writeScreen("Selecione zona");
-								_delay_ms(10);
-							break;
-						}
+						}*/
 					break;
-					case b_1:
+					/*case b_1:
 						switch(teclado){
 							case b_1:
 								if(flagSensorZona == true){
@@ -738,7 +739,7 @@ int main(void)
 							_delay_ms(10);
 							break;
 						}
-					break;
+					break;*/
 					default:
 						clearDisplay();
 						writeScreen("Selecione sensor");
@@ -977,4 +978,38 @@ int whichZone(int pose){
 		else{
 			return 1;
 		}
+}
+
+void selZonaSensor0(){
+	teclado = 255;
+	switch(teclado){
+		case b_1:
+		teclado = 255;
+		clearDisplay();
+		writeScreen("1");
+		_delay_ms(10);
+		//if(flagSensorZona == true){
+			zona1[0] = 1;
+			//}else{
+			//zona1[0] = 0;
+		//}
+		waitE();
+		break;
+		case b_2:
+		if(flagSensorZona == true){
+			zona2[0] = 1;
+			}else{
+			zona2[0] = 0;
+		}
+		waitE();
+		break;
+		case b_3:
+		if(flagSensorZona == true){
+			zona3[0] = 1;
+			}else{
+			zona3[0] = 0;
+		}
+		waitE();
+		break;
+	}
 }
