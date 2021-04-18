@@ -1,4 +1,3 @@
-
 /*
  * main.c
  *
@@ -52,15 +51,16 @@
 int8_t estado=desativado;
 int8_t teclado=b_invalida;
 
-uint8_t reg_sensores_ativados[8] = {0,0,0,0,0,0,0,1};
-uint8_t zona1[8] = {0,0,0,0,0,0,0,0};
-uint8_t zona2[8] = {0,0,0,0,0,0,0,0};
-uint8_t zona3[8] = {0,0,0,0,0,0,0,0};
+uint8_t reg_sensores_ativados[8] = {1,0,0,0,0,0,0,0};
+uint8_t zona1[9] = {1,0,0,0,0,0,0,0,0};
+uint8_t zona2[9] = {0,0,0,0,0,0,0,0,0};
+uint8_t zona3[9] = {0,0,0,0,0,0,0,0,0};
 
 bool pressionado = false;
 bool flagSensorZona = false;
+bool flagZona = true;
 
-int senhas[4]={1234,-1,-1,-1};
+int senhas[4]={1234,1111,-1,-1};
 	
 int resposta;
 
@@ -106,7 +106,7 @@ int main(void)
 	sei();
 	
 	bool varSenha = false;
-	estado = p_sensor_zona;
+	estado = p_sel_zona;
 	
    while(1)
    {	
@@ -247,6 +247,7 @@ int main(void)
 					break;
 					case(b_5):
 						teclado = 255;
+						flagZona = true;
 						estado=p_sel_zona;
 					break;
 					case(b_6):
@@ -277,6 +278,7 @@ int main(void)
 					estado=p_sensor_zona;
 					break;
 					case(b_5):
+					flagZona = false;
 					estado=p_sel_zona;
 					break;
 					default:
@@ -684,7 +686,7 @@ int main(void)
 						_delay_ms(100);
 						clearDisplay();
 						writeScreen("Sel zona");
-						_delay_ms(10);
+						_delay_ms(100);
 						teclado = 255;
 						do{
 							if(teclado==b_1){
@@ -769,8 +771,56 @@ int main(void)
 					break;
 			}
 			break;
-			/*case p_sel_zona :
+			case p_sel_zona :
+				switch(teclado){
+					case b_1:
+						clearDisplay();
+						writeScreen("zona 01");
+						_delay_ms(100);
+						if(flagZona == true){
+							zona1[9] = 1;
+						}
+						else{
+							zona1[9] = 0;
+						}
+						waitE();
+					break;
+					case b_2:
+						clearDisplay();
+						writeScreen("zona 02");
+						_delay_ms(100);
+						if(flagZona == true){
+							zona2[9] = 1;
+						}
+						else{
+							zona2[9] = 0;
+						}
+						waitE();
+					break;
+					case b_3:
+						clearDisplay();
+						writeScreen("zona 03");
+						_delay_ms(100);
+						if(flagZona == true){
+							zona3[9] = 1;
+						}
+						else{
+							zona3[9] = 0;
+						}
+						waitE();						
+					break;
+					case 103:
+						estado = desativado;
+					break;
+					default:
+						clearDisplay();
+						writeScreen("Selecione zona");
+						_delay_ms(100);
+			
+		     		break;
+				}
 			break;
+			/*
 			case p_tempo_ativacao :
 			break;
 			case p_tempo_timeout :
@@ -797,7 +847,7 @@ void verifica_sensores_ativos(){
 			clearDisplay();
 			writeScreen("Alarme 01");
 			//PORTD |= (1 << DDD7);
-			_delay_ms(10);
+			_delay_ms(100);
 			};
 		if ((reg_sensores_ativados[1] == 1) & (PINB == (PINB & 0b11111101))){
 			zonaLed = whichZone(1);
@@ -805,7 +855,7 @@ void verifica_sensores_ativos(){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 02");
 			PORTD |= (1 << DDD7);
-			_delay_ms(10);
+			_delay_ms(100);
 		}
 		if ((reg_sensores_ativados[2] == 1) & (PINB == (PINB & 0b11111011))){
 			zonaLed = whichZone(2);
@@ -813,7 +863,7 @@ void verifica_sensores_ativos(){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 03");
 			PORTD |= (1 << DDD7);
-			_delay_ms(10);
+			_delay_ms(100);
 		}
 		if ((reg_sensores_ativados[3] == 1) & (PINB == (PINB & 0b11110111))){
 			zonaLed = whichZone(3);
@@ -821,7 +871,7 @@ void verifica_sensores_ativos(){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 04");
 			PORTD |= (1 << DDD7);
-			_delay_ms(10);
+			_delay_ms(100);
 		}
 		if ((reg_sensores_ativados[4] == 1) & (PINB == (PINB & 0b11101111))){
 			zonaLed = whichZone(4);
@@ -829,7 +879,7 @@ void verifica_sensores_ativos(){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 05");
 			PORTD |= (1 << DDD7);
-			_delay_ms(10);
+			_delay_ms(100);
 		}
 		if ((reg_sensores_ativados[5] == 1) & (PINB == (PINB & 0b11011111))){
 			zonaLed = whichZone(5);
@@ -837,7 +887,7 @@ void verifica_sensores_ativos(){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 06");
 			PORTD |= (1 << DDD7);
-			_delay_ms(10);
+			_delay_ms(100);
 		}
 		if ((reg_sensores_ativados[6] == 1) & (PINB == (PINB & 0b10111111))){
 			zonaLed = whichZone(6);
@@ -845,7 +895,7 @@ void verifica_sensores_ativos(){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 07");
 			PORTD |= (1 << DDD7);
-			_delay_ms(10);
+			_delay_ms(100);
 		}
 		if ((reg_sensores_ativados[7] == 1) & (PINB == (PINB & 0b01111111))){
 			zonaLed = whichZone(7);
@@ -853,7 +903,7 @@ void verifica_sensores_ativos(){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 08");
 			PORTD |= (1 << DDD7);
-			_delay_ms(10);
+			_delay_ms(100);
 		}
 	}
 	
@@ -989,13 +1039,23 @@ void waitE(){
 
 int whichZone(int pose){
 		if(zona1[pose]==1){
-			return 3;
+			if(zona1[9] == 1){
+				PORTD |= (1 << DDD7);
+				return 3;
+			}
+
 		}
 		else if(zona2[pose]==1){
-			return 4;
+			if(zona1[9] == 1){
+				PORTD |= (1 << DDD7);
+				return 4;
+			}
 		}
 		else if(zona3[pose]==1){
-			return 5;
+			if(zona1[9] == 1){
+				PORTD |= (1 << DDD7);
+				return 5;
+			}
 		}
 		else{
 			return 1;
