@@ -50,12 +50,9 @@
 int8_t estado=desativado;
 int8_t teclado=b_invalida;
 
-uint8_t reg_sensores_ativados = 0b00000000;
+uint8_t reg_sensores_ativados[8] = {0,0,0,0,0,0,0,0};
 
-bool senha_aberta[4] = {true,false,false,false};
 bool pressionado = false;
-bool FlagSenha = false;
-bool ativar=false;//flag de ativar/desativar ..sensores..zona.
 
 int senhas[4]={1234,-1,-1,-1};
 	
@@ -108,15 +105,12 @@ int main(void)
    {	
         switch (estado){
 	        case desativado:
-			
-				FlagSenha = false;
 				switch(teclado){
 					case b_A:
 						clearDisplay();
 						writeScreen("Des->Ativado!");
 						_delay_ms(10);
 						varSenha = insere_verifica_senhas(false, true);
-						//estado = ativado;
 						pressionado = false;
 					break;
 					case b_P:
@@ -124,7 +118,6 @@ int main(void)
 						writeScreen("Des->Programar!");
 						_delay_ms(10);
 						varSenha = insere_verifica_senhas(true, false);
-						//estado = programacao;
 						pressionado = false;
 					break;
 					case b_R:
@@ -154,7 +147,6 @@ int main(void)
 						position0();
 						writeScreen("Atv-Desativar!");
 						varSenha = insere_verifica_senhas(false, true);
-						//estado = desativado;
 						pressionado = false;
 					break;
 					case b_R:
@@ -239,15 +231,12 @@ int main(void)
 					case(b_3):
 						teclado = 255;
 						estado=p_sensor_config;
-						ativar=true;
 					break;
 					case(b_4):
 						estado=p_sensor_zona;
-						ativar=true;
 					break;
 					case(b_5):
 						estado=p_sel_zona;
-						ativar=true;
 					break;
 					case(b_6):
 						estado=p_tempo_ativacao;
@@ -258,52 +247,30 @@ int main(void)
 					case(b_8):
 						estado=p_tempo_sirene;
 					break;
-					/*
-					case(b_R):
-					//caso_R();
-					break;
-					case(b_S):
-					//caso_S();
-					break;
-					*/
 					default:
 					clearDisplay();
 					writeScreen("Selecione opcao ");
 					_delay_ms(10);
 					break;
-					//verificar_timeout();
 			}
 			break;
 			case p_desativar:
 				switch (teclado){
 					case(b_3):
 					estado = p_sensor_desativar;
-					ativar=false;
 					break;
 					case(b_4):
 					estado=p_sensor_zona;
-					ativar=false;
 					break;
 					case(b_5):
 					estado=p_sel_zona;
-					ativar=false;
-					break;
-					case(b_R):
-					//caso_R();
-					break;
-					case(b_S):
-					//caso_S();
 					break;
 					default:
 					break;
-					//verificar_timeout();
 			}
 			break;
 			case p_alterar_senha :
 				switch (teclado){
-					//case(b_0):
-					//alterar_senha(0);
-					//break;
 					case(b_1):
 					teclado = 255;
 					alterar_senha(1);
@@ -314,13 +281,6 @@ int main(void)
 					break;
 					case(b_3):
 					alterar_senha(3);
-					//break;
-					//case(b_R):
-					//caso_R();
-					//break;
-					//case(b_S):
-					//caso_S();
-					//break;
 					default:
 					clearDisplay();
 					writeScreen("Alterar senha:\n");
@@ -334,41 +294,41 @@ int main(void)
 					clearDisplay();
 					writeScreen("0");
 					_delay_ms(10);
-					reg_sensores_ativados = reg_sensores_ativados | 0b00000001;
+					reg_sensores_ativados[0] = 1;
 					waitE();
 					break;
 					case b_1:
 					clearDisplay();
 					writeScreen("1");
 					_delay_ms(10);
-					reg_sensores_ativados = reg_sensores_ativados | 0b00000010;
+					reg_sensores_ativados[1] = 1;
 					waitE();
 					break;
 					case b_2:
-					reg_sensores_ativados = reg_sensores_ativados | 0b00000100;
+					reg_sensores_ativados[2] = 1;
 					waitE();
 					break;
 					case b_3:
-					reg_sensores_ativados = reg_sensores_ativados | 0b00001000;
+					reg_sensores_ativados[3] = 1;
 					waitE();
 					break;
 					case b_4:
-					reg_sensores_ativados = reg_sensores_ativados | 0b00010000;
+					reg_sensores_ativados[4] = 1;
 					waitE();
 					break;
 					case b_5:
 					clearDisplay();
 					writeScreen("5");
 					_delay_ms(10);
-					reg_sensores_ativados = reg_sensores_ativados | 0b00100000;
+					reg_sensores_ativados[5] = 1;
 					waitE();
 					break;
 					case b_6:
-					reg_sensores_ativados = reg_sensores_ativados | 0b01000000;
+					reg_sensores_ativados[6] = 1;
 					waitE();
 					break;
 					case b_7:
-					reg_sensores_ativados = reg_sensores_ativados | 0b10000000;
+					reg_sensores_ativados[7] = 1;
 					waitE();
 					break;
 					case 103:
@@ -391,40 +351,40 @@ int main(void)
 				clearDisplay();
 				writeScreen("0");
 				_delay_ms(10);
-				reg_sensores_ativados = reg_sensores_ativados & 0b11111110;
+				reg_sensores_ativados[0] = 0;
 				waitE();
 				break;
 				case b_1:
 				clearDisplay();
 				writeScreen("1");
 				_delay_ms(10);
-				reg_sensores_ativados = reg_sensores_ativados & 0b11111101;
+				reg_sensores_ativados[1] = 0;
 				waitE();
 				break;
 				case b_2:
-				reg_sensores_ativados = reg_sensores_ativados & 0b11111011;
+				reg_sensores_ativados[2] = 0;
 				waitE();
 				break;
 				case b_3:
-				reg_sensores_ativados = reg_sensores_ativados & 0b11110111;
+				reg_sensores_ativados[3] = 0;
 				waitE();
 				break;
 				case b_4:
-				reg_sensores_ativados = reg_sensores_ativados & 0b11101111;
+				reg_sensores_ativados[4] = 0;
 				waitE();
 				break;
 				case b_5:
 				clearDisplay();
 				writeScreen("5");
 				_delay_ms(10);
-				reg_sensores_ativados = reg_sensores_ativados & 0b11011111;
+				reg_sensores_ativados[5] = 0;
 				waitE();
 				case b_6:
-				reg_sensores_ativados = reg_sensores_ativados & 0b10111111;
+				reg_sensores_ativados[6] = 0;
 				waitE();
 				break;
 				case b_7:
-				reg_sensores_ativados = reg_sensores_ativados & 0b01111111;
+				reg_sensores_ativados[7] = 0;
 				waitE();
 				break;
 				case 103:
@@ -467,49 +427,49 @@ void verifica_sensores_ativos(){
 	{
 		
 		    //00000001 & 11111110 == 11111110 & 11111110
-		if ((reg_sensores_ativados & PINB) == (PINB & 0b11111110)){
+		if ((reg_sensores_ativados[0] == 1) & (PINB == (PINB & 0b11111110))){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 01");
 			PORTD |= (1 << DDD7);
 			_delay_ms(10);
 			};
-		if ((reg_sensores_ativados & PINB) == (PINB & 0b11111101)){
+		if ((reg_sensores_ativados[1] == 1) & (PINB == (PINB & 0b11111101))){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 02");
 			PORTD |= (1 << DDD7);
 			_delay_ms(10);
 		}
-		if ((reg_sensores_ativados & PINB) == (PINB & 0b11111011)){
+		if ((reg_sensores_ativados[2] == 1) & (PINB == (PINB & 0b11111011))){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 03");
 			PORTD |= (1 << DDD7);
 			_delay_ms(10);
 		}
-		if ((reg_sensores_ativados & PINB) == (PINB & 0b11110111)){
+		if ((reg_sensores_ativados[3] == 1) & (PINB == (PINB & 0b11110111))){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 04");
 			PORTD |= (1 << DDD7);
 			_delay_ms(10);
 		}
-		if ((reg_sensores_ativados & PINB) == (PINB & 0b11101111)){
+		if ((reg_sensores_ativados[4] == 1) & (PINB == (PINB & 0b11101111))){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 05");
 			PORTD |= (1 << DDD7);
 			_delay_ms(10);
 		}
-		if ((reg_sensores_ativados & PINB) == (PINB & 0b11011111)){
+		if ((reg_sensores_ativados[5] == 1) & (PINB == (PINB & 0b11011111))){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 06");
 			PORTD |= (1 << DDD7);
 			_delay_ms(10);
 		}
-		if ((reg_sensores_ativados & PINB) == (PINB & 0b10111111)){
+		if ((reg_sensores_ativados[6] == 1) & (PINB == (PINB & 0b10111111))){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 07");
 			PORTD |= (1 << DDD7);
 			_delay_ms(10);
 		}
-		if ((reg_sensores_ativados & PINB) == (PINB & 0b01111111)){
+		if ((reg_sensores_ativados[7] == 1) & (PINB == (PINB & 0b01111111))){
 			clearDisplay();
 			writeScreen("Alarme Acionado!\n Setor: 08");
 			PORTD |= (1 << DDD7);
@@ -523,17 +483,13 @@ bool insere_verifica_senhas(bool mestre, bool EorNot){
 	clearDisplay();
 	writeScreen("INSIRA SENHA:\n");
 	_delay_ms(10);
-	//enable_contador()
 	resposta=inserir_senha(EorNot);
 	if(resposta>0){
 		if(!mestre){
 			for (uint8_t i = 1; i < 4; ++i){
-				//if (senha_aberta[i]){
 					if(resposta==senhas[i]){
 						clearDisplay();
 						writeScreen("\nSENHA CORRETA");
-						//criar_log_UART("usuario x")
-						FlagSenha = false;
 						teclado = 102;
 						return true;
 					}
@@ -541,11 +497,8 @@ bool insere_verifica_senhas(bool mestre, bool EorNot){
 						clearDisplay();
 						writeScreen("\nSENHA INCORRETA");
 						_delay_ms(10);
-						FlagSenha = false;
 						return false;
 				 }
-				 //aqui
-				//}
 			}
 		}
 		else{
@@ -553,7 +506,6 @@ bool insere_verifica_senhas(bool mestre, bool EorNot){
 				clearDisplay();
 				writeScreen("SENHA MESTRE\n CORRETA!");
 				_delay_ms(10);
-				FlagSenha = true;
 				teclado = 101;
 				return true;
 				//criar_log_UART("usuario mestre")
@@ -562,14 +514,10 @@ bool insere_verifica_senhas(bool mestre, bool EorNot){
 				clearDisplay();
 				writeScreen("SENHA MESTRE\n INCORRETA!");
 				_delay_ms(10);
-				FlagSenha = false;
 				return false;
 			}
 		}
 	}
-	//disable_contador();
-	//return true;
-	//tem mais//
 }
 
 int inserir_senha(bool EorNot){
@@ -626,28 +574,6 @@ int inserir_senha(bool EorNot){
 					resposta=resposta+ver_senha[i]*MCDU;
 					MCDU=MCDU*10;
 				}
-				
-		/*
-		switch (teclado){
-			case b_E:
-				for (i=3; i >=0; --i){
-					resposta=resposta+ver_senha[i]*MCDU;
-					MCDU=MCDU*10;
-				}
-				return resposta;
-			break;
-			case(b_R):
-				//caso_R();
-				return -1;
-				break;
-			case(b_S):
-				//caso_S();
-				return -1;
-			break;
-			default:
-			break;
-		}
-	*/	
 	}
 	}
 	else{
@@ -671,23 +597,6 @@ void alterar_senha(uint8_t index){
 		senha_aux=inserir_senha(true);
 	}
 	senhas[index]=senha_aux;
-	/*while(!pressionado){
-		switch (teclado){
-			case(b_E):
-			senhas[index]=resposta;
-			break;
-			case(b_R):
-			//caso_R();
-			break;
-			case(b_S):
-			//caso_S();
-			break;
-			default:
-			//delay(1);//apenas convencionado
-			break;
-		}
-	}*/
-	//senha_aberta[index]=true;
 }
 
 void waitE(){
