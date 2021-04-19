@@ -12,43 +12,43 @@
 #include "LEDS.h"
 //#include <util/delay.h>
 #include <stdbool.h>
+/*
+#define 0 0
+#define 1 1
+#define 2 2
+#define 3 3
+#define 4 4
+#define 5 5
+#define 6 6
+#define 7 7
+#define 8 8
+#define 9 9
+#define 10 10
+#define 11 11
+#define 12 12
+#define 13 13
+#define 14 14
 
-#define desativado 0
-#define ativado 1
-#define programacao 2
-#define recuperacao 3
-#define panico 4
-#define p_alterar_senha 5
-#define p_sensor_config 6
-#define p_sensor_zona 7
-#define p_sel_zona 8
-#define p_tempo_ativacao 9
-#define p_tempo_timeout 10
-#define p_tempo_sirene 11
-#define p_ativar 12
-#define p_desativar 13
-#define p_sensor_desativar 14
-
-#define b_1 2
-#define b_2 6
-#define b_3 10
-#define b_P 12
-#define b_4 1
-#define b_5 5
-#define b_6 9
-#define b_A 13
-#define b_7 0
-#define b_8 4
-#define b_9 8
-#define b_D 14
-#define b_R 3
-#define b_0 7
-#define b_S 11
-#define b_E 15
-#define b_invalida 255//utilizada quando não se está precionando qualquer tecla
-
-int8_t estado=desativado;
-int8_t teclado=b_invalida;
+#define 2 2
+#define 6 6
+#define 10 10
+#define 12 12
+#define 1 1
+#define 5 5
+#define 9 9
+#define 13 13
+#define 0 0
+#define 4 4
+#define 8 8
+#define 14 14
+#define 3 3
+#define 7 7
+#define 11 11
+#define 15 15
+#define 255 255//utilizada quando não se está precionando qualquer tecla
+*/
+int8_t estado=0;
+int8_t teclado=255;
 
 uint8_t reg_sensores_ativados[8] = {0,0,0,0,0,0,0,0};
 uint8_t zona1[9] = {0,0,0,0,0,0,0,0,0};
@@ -104,15 +104,15 @@ int main(void)
 	sei();
 	
 	//bool varSenha = false;
-	//estado = p_sel_zona;
+	//estado = 8;
 	
    while(1)
    {	
         switch (estado){
-	        case desativado:
+	        case 0:
 				
 				switch(teclado){
-					case b_A:
+					case 13:
 						clearDisplay();
 						position0();
 						writeScreen("Des->Ativado!");
@@ -120,7 +120,7 @@ int main(void)
 						insere_verifica_senhas(false, true);
 						pressionado = false;
 					break;
-					case b_P:
+					case 12:
 						clearDisplay();
 						position0();
 						writeScreen("Des->Programar!");
@@ -128,20 +128,20 @@ int main(void)
 						insere_verifica_senhas(true, false);
 						pressionado = false;
 					break;
-					case b_R:
+					case 3:
 						clearDisplay();
 						position0();
 						writeScreen("Des->Recuperar!");
 						_delay_ms(500);
-						estado = recuperacao;
+						estado = 3;
 						pressionado = false;
 					break;
 					case 101:
-						estado = programacao;
+						estado = 2;
 					break;
 					case 102:
 						teclado = 255;
-						estado = ativado;
+						estado = 1;
 					break;
 					default:
 						position0();
@@ -151,30 +151,30 @@ int main(void)
 					break;
 	        }
 	        break;
-	        case ativado:	
+	        case 1:	
 				switch(teclado){
-					case b_D:
+					case 14:
 						clearDisplay();
 						insere_verifica_senhas(false, true);
 						pressionado = false;
 					break;
-					case b_R:
+					case 3:
 						clearDisplay();
-						estado = recuperacao;
+						estado = 3;
 						pressionado = false;		       
 					break;
-					case b_S :
+					case 11 :
 						clearDisplay();
 						position0();
 						writeScreen("Atv->Panico!");
 						_delay_ms(500);					
-						estado = panico;	
-						teclado = b_invalida;
+						estado = 4;	
+						teclado = 255;
 						pressionado = false;	       
 					break;
 					case 102:
 						teclado = 255;
-						estado = desativado;
+						estado = 0;
 					break;
 					default:
 						verifica_sensores_ativos();
@@ -182,30 +182,30 @@ int main(void)
 					break;
 	        }
 	        break;
-	        case programacao:
+	        case 2:
 				switch (teclado){
-					case b_R:
+					case 3:
 						clearDisplay();
 						writeScreen("Prog->Desativar!");
-						estado = desativado;
-						teclado = b_invalida;	
+						estado = 0;
+						teclado = 255;	
 						pressionado = false;				
 					break;
-					case b_S:
+					case 11:
 						clearDisplay();
 						writeScreen("Prog->Panico!");
-						estado = panico;	
+						estado = 4;	
 						pressionado = false;				
 					break;
-					case(b_A):
+					case(13):
 						clearDisplay();
 						teclado = 255;
-						estado = p_ativar;
+						estado = 12;
 					break;
-					case(b_D):
+					case(14):
 						clearDisplay();
 						teclado = 255;
-						estado = p_desativar;
+						estado = 13;
 					break;
 					default:
 					position0();
@@ -214,18 +214,18 @@ int main(void)
 					break;
 				}
 	        break;
-	        case recuperacao:
+	        case 3:
 					clearDisplay();
 					writeScreen("Recuperando...");
 					pressionado = false;
 	        break;
-	        case panico:
+	        case 4:
 				switch (teclado){
-					case b_S:
+					case 11:
 						clearDisplay();
 						writeScreen("Pan->Desativado!");
 						PORTD &= ~(1 << DDD7);
-						estado = desativado;	
+						estado = 0;	
 						pressionado = false;				
 					break;			
 					default:
@@ -236,38 +236,38 @@ int main(void)
 					break;
 				}
 	        break;
-			case p_ativar:
+			case 12:
 				switch (teclado){
-					case(b_2):
+					case(6):
 						teclado = 255;
-						estado=p_alterar_senha;
+						estado=5;
 						clearDisplay();
 					break;
-					case(b_3):
+					case(10):
 						teclado = 255;
-						estado=p_sensor_config;
+						estado=6;
 						clearDisplay();
 					break;
-					case(b_4):
+					case(1):
 						teclado = 255;
 						flagSensorZona = true;
-						estado=p_sensor_zona;
+						estado=7;
 						clearDisplay();
 					break;
-					case(b_5):
+					case(5):
 						teclado = 255;
 						flagZona = true;
-						estado=p_sel_zona;
+						estado=8;
 						clearDisplay();
 					break;
-					case(b_6):
-						estado=p_tempo_ativacao;
+					case(9):
+						estado=9;
 					break;
-					case(b_7):
-						estado=p_tempo_timeout;
+					case(0):
+						estado=10;
 					break;
-					case(b_8):
-						estado=p_tempo_sirene;
+					case(4):
+						estado=11;
 					break;
 					default:
 					position0();
@@ -276,20 +276,20 @@ int main(void)
 					break;
 			}
 			break;
-			case p_desativar:
+			case 13:
 				switch (teclado){
-					case(b_3):
+					case(10):
 					teclado = 255;
-					estado = p_sensor_desativar;
+					estado = 14;
 					break;
-					case(b_4):
+					case(1):
 					teclado = 255;
 					flagSensorZona = false;
-					estado=p_sensor_zona;
+					estado=7;
 					break;
-					case(b_5):
+					case(5):
 					flagZona = false;
-					estado=p_sel_zona;
+					estado=8;
 					break;
 					default:
 					clearDisplay();
@@ -299,19 +299,19 @@ int main(void)
 			}
 			break;
 
-			case p_alterar_senha :
+			case 5 :
 				switch (teclado){
-					case(b_1):
+					case(2):
 					clearDisplay();
 					teclado = 255;
 					alterar_senha(1);
-					estado = desativado;
+					estado = 0;
 					break;
-					case(b_2):
+					case(6):
 					clearDisplay();
 					alterar_senha(2);
 					break;
-					case(b_3):
+					case(10):
 					clearDisplay();
 					alterar_senha(3);
 					default:
@@ -321,44 +321,44 @@ int main(void)
 					break;
 			}
 			break;
-			case p_sensor_config :
+			case 6 :
 				switch(teclado){
-					case b_0:
+					case 7:
 					position0();
 					writeScreen("   Habilitado!  \n   Sensor '0'   ");
 					_delay_ms(250);
 					reg_sensores_ativados[0] = 1;
 					waitE();
 					break;
-					case b_1:
+					case 2:
 					position0();
 					writeScreen("   Habilitado!  \n   Sensor '1'   ");
 					_delay_ms(250);
 					reg_sensores_ativados[1] = 1;
 					waitE();
 					break;
-					case b_2:
+					case 6:
 					position0();
 					writeScreen("   Habilitado!  \n   Sensor '2'   ");
 					_delay_ms(250);
 					reg_sensores_ativados[2] = 1;
 					waitE();
 					break;
-					case b_3:
+					case 10:
 					position0();
 					writeScreen("   Habilitado!  \n   Sensor '3'   ");
 					_delay_ms(250);
 					reg_sensores_ativados[3] = 1;
 					waitE();
 					break;
-					case b_4:
+					case 1:
 					position0();
 					writeScreen("   Habilitado!  \n   Sensor '4'   ");
 					_delay_ms(250);
 					reg_sensores_ativados[4] = 1;
 					waitE();
 					break;
-					case b_5:
+					case 5:
 					position0();
 					writeScreen("   Habilitado!  \n   Sensor '5'   ");
 					_delay_ms(250);
@@ -366,14 +366,14 @@ int main(void)
 					reg_sensores_ativados[5] = 1;
 					waitE();
 					break;
-					case b_6:
+					case 9:
 					position0();
 					writeScreen("   Habilitado!  \n   Sensor '6'   ");
 					_delay_ms(250);
 					reg_sensores_ativados[6] = 1;
 					waitE();
 					break;
-					case b_7:
+					case 0:
 					position0();
 					writeScreen("   Habilitado!  \n   Sensor '7'   ");
 					_delay_ms(250);
@@ -387,7 +387,7 @@ int main(void)
 						_delay_ms(300);
 						clearDisplay();
 						teclado = 255;
-						estado = desativado;
+						estado = 0;
 					break;
 					default:
 					position0();
@@ -397,9 +397,9 @@ int main(void)
 			}
 			break;
 			
-			case p_sensor_desativar:
+			case 14:
 			switch(teclado){
-				case b_0:
+				case 7:
 				clearDisplay();
 				writeScreen("0");
 				_delay_ms(100);
@@ -444,7 +444,7 @@ int main(void)
 				writeScreen("Sensor Desabilitado");
 				_delay_ms(100);
 				teclado = 255;
-				estado = desativado;
+				estado = 0;
 				break;
 				default:
 				clearDisplay();
